@@ -16,7 +16,7 @@ Public Class LoginScreen
     Dim dr As SqlDataReader
     Dim X As Integer = 0
     Dim MainWindow = New MainWindow()
-    Dim MsgCritical = New MsgCritical()
+    Dim MsgCritical = New MsgCritical() 'create construktor
     Dim MsgCheck = New MsgCheck()
     Dim ProgresBarAnimation = New ProgresBarAnimation()
     Dim inprocent As Integer = 1
