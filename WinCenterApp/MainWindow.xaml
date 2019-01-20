@@ -5,8 +5,402 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCenterApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800" Foreground="White" Background="DimGray" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="images/icons8_Home.ico" Cursor="Hand" Loaded="Window_Loaded">
+
+    <Window.Resources>
+
+        <Style 
+             TargetType="Button" x:Key="NewGameButtonStyle">
+            <Setter Property="FontFamily" Value="Resources/teen bd.ttf#Teen"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border BorderThickness="2" 
+                                    CornerRadius="4"
+                                    Padding="3"
+                                    x:Name="ButtonBorder"
+                                    Background="Silver"
+                                >
+                                <Border.BorderBrush>
+                                    <SolidColorBrush x:Name="ButtonBorderBrush" Color="Black"/>
+                                </Border.BorderBrush>
+                                <ContentPresenter HorizontalAlignment="Center"
+                             Margin="4,0,4,0"
+                             VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="#C0C0C0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="GelButton">
+            <Setter Property="Background" Value ="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootElement">
+                            <!-- drop shadow - needs to be blurred for correct effect -->
+                            <Rectangle Fill="{x:Null}" Margin="1,1,0,0" RadiusX="6" RadiusY="6">
+                                <Rectangle.BitmapEffect>
+                                    <BlurBitmapEffect Radius="3" />
+                                </Rectangle.BitmapEffect>
+                            </Rectangle>
+                            <Grid x:Name="mainButton"
+                                Margin="0,0,1,1"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="0.0" Y="0.0"/>
+                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Rectangle x:Name="mainRect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6">
+                                </Rectangle>
+
+                                <!-- transparent rect -->
+                                <Rectangle x:Name="glowRect" Margin="1,1,1,1" RadiusX="5" RadiusY="5">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#00FFFFFF"/>
+                                            <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                             Margin="4,0,4,0"
+                             Content="{TemplateBinding Content}"
+                             VerticalAlignment="Center" />
+
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="0.0" Y="0.0"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="#FF4788c8" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="1" Y="1"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="Black" Margin="1">
+
+        <Grid x:Name="RangeWindow" Opacity="0.95">
+
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="Black" Offset="0.1" />
+                    <GradientStop Color="#FF575757" Offset="0.6" />
+                    <GradientStop Color="Black" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="400*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Name="SidePanel" Grid.Row="1" Grid.Column="0">
+                <Canvas>
+                    <DockPanel>
+                        <StackPanel Width="201" Margin="-150,0,0,0">
+                            <StackPanel.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
+                                    <GradientStop Color="#FF450E47" Offset="0.15"/>
+                                    <GradientStop Color="#FF422349" Offset="0.85"/>
+                                    <GradientStop Color="#FFA01794" Offset="0.5"/>
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
+
+                                        <!--<Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Green"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="#2B303B"/>
+                                </Trigger>-->
+
+                                        <EventTrigger RoutedEvent="MouseEnter">
+                                            <EventTrigger.Actions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-150,0,0,0" To="0,0,0,0" DecelerationRatio=".9"
+                                                                    Duration="0:0:0.5"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger.Actions>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <EventTrigger.Actions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="-150,0,0,0" DecelerationRatio=".9"
+                                                                    Duration="0:0:0.7"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger.Actions>
+                                        </EventTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+
+                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
+                                <Label x:Name="Click1" Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16" MouseMove="Label_MouseMove" MouseLeave="Label_MouseLeave">
+
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="Orange"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="White" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+
+                                </Label>
+                                <Image Source="images/dashboard.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                            </DockPanel>
+
+                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
+                                <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
+
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="Orange"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="White" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+
+                                </Label>
+                                <Image Source="images/pencil-writing-on-a-paper.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                            </DockPanel>
+
+                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
+                                <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
+
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="Orange"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Foreground">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="White" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+
+                                </Label>
+                                <Image Source="images/folder.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </Canvas>
+            </Grid>
+
+            <Grid Name="Images" Margin="0.5">
+                <Image Source="images/org.png" Grid.Row="0" Stretch="Fill" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity = "0.8" Grid.ColumnSpan="2">
+                    <Image.Effect>
+                        <DropShadowEffect Opacity="0.5" Direction="100" Color="#FF9C9C9C" ShadowDepth="1" RenderingBias="Quality"/>
+                    </Image.Effect>
+                </Image>
+            </Grid>
+
+            <Grid x:Name="Range_Calendar" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+
+                <StackPanel>
+                    <Calendar Name="calendar1" Margin="5"
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Right" 
+                          SelectionMode="SingleRange"
+                          FirstDayOfWeek="Monday" 
+                          IsTodayHighlighted="True">
+                        <Calendar.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+                                <GradientStop Color="DarkOrange" Offset="0.1" />
+                                <GradientStop Color="Orange" Offset="0.25" />
+                                <GradientStop Color="LightGoldenrodYellow" Offset="0.75" />
+                                <GradientStop Color="Orange" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Calendar.Background>
+                        <Calendar.Foreground>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+                                <GradientStop Color="Black" Offset="0.25" />
+                                <GradientStop Color="Green" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Calendar.Foreground>
+                    </Calendar>
+                </StackPanel>
+
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=btnFirst}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+
+            <Grid Name="DateTimeZone" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Label Name="lblTime" Height="30" Width="85" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Margin="0,10,5,0" Foreground="White"/>
+                    <ToggleButton x:Name="btnFirst" Content="Kalendarz" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="150" Grid.Column="1" Grid.Row="1" Margin="0,10,5,0" 
+                              BorderBrush="#FF444444" Opacity="0.85" FontWeight="Bold" FontSize="14">
+
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="Orange"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Foreground">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="White" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+
+                        <ToggleButton.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                                <GradientStop Color="#FF450E47" Offset="0.15"/>
+                                <GradientStop Color="#FF422349" Offset="0.85"/>
+                                <GradientStop Color="#FFA01794" Offset="0.5"/>
+                            </LinearGradientBrush>
+                        </ToggleButton.Background>
+
+                    </ToggleButton>
+                </StackPanel>
+            </Grid>
+
+            <Grid x:Name="Dashboards" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+
+                <TextBox Width="100" Height="50" Text="Siema" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="White"/>
+
+                <!--<Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
+                    <GradientStop Color="#FF450E47" Offset="0.15"/>
+                    <GradientStop Color="#FF422349" Offset="0.85"/>
+                    <GradientStop Color="#FFA01794" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Grid.Background>-->
+
+            </Grid>
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Height="64" Margin="18,10,0,0" VerticalAlignment="Top" Width="402">
+                <Label Content="Witaj,&#xA;w aplikacji do zarządzania narzędziami Ab!" HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" VerticalAlignment="Top" Width="382" Background="{x:Null}" Foreground="White" FontWeight="Bold" FontSize="12"/>
+            </Grid>
+
+            <Button Click="lgout" Content="LogOut" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" Width="60" Grid.Column="1" Grid.Row="1" Margin="5" 
+                              BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                        <GradientStop Color="#FF450E47" Offset="0.15"/>
+                        <GradientStop Color="#FF422349" Offset="0.85"/>
+                        <GradientStop Color="#FFA01794" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Button Content="Change password" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="25" Grid.Column="1" Grid.Row="1" Margin="390,0,70,5" 
+                              BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Chngpass">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                        <GradientStop Color="#FF450E47" Offset="0.15"/>
+                        <GradientStop Color="#FF422349" Offset="0.85"/>
+                        <GradientStop Color="#FFA01794" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+        </Grid>
+
     </Grid>
+
 </Window>
