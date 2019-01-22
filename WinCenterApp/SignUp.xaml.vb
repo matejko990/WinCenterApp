@@ -1,6 +1,9 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
 Imports System.Data.DataTable
+Imports System.Text
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
 
 Public Class SignUp
 
@@ -9,6 +12,69 @@ Public Class SignUp
     Dim curDate As Date = Date.Now.ToString("yyyy-MM-dd")
     Dim strDate As String = regDate.ToString("yyyy-MM-dd HH:mm:ss")
     Dim WithEvents TimerRefreshTime As New System.Windows.Threading.DispatcherTimer
+
+    Dim DrawingFont As New Font("Arial", 25)
+    Dim CaptchaImage As New BitmapImage
+    Dim CaptchaGraf As Graphics = Graphics.FromImage(CaptchaImage)
+    Dim Alphabet As String = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+    Dim CaptchaString, TickRandom As String
+    Dim ProcessNumber As Integer
+
+    Private Sub GenerateCaptcha()
+
+        ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
+        If ProcessNumber < 521 Then
+            ProcessNumber = ProcessNumber \ 10
+            CaptchaString = Alphabet.Substring(ProcessNumber, 1)
+        Else
+            CaptchaString = CStr(My.Computer.Clock.LocalTime.Second \ 6)
+        End If
+        ProcessNumber = My.Computer.Clock.LocalTime.Second
+        If ProcessNumber < 30 Then
+            ProcessNumber = Math.Abs(ProcessNumber - 8)
+            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+        Else
+            CaptchaString += CStr(My.Computer.Clock.LocalTime.Minute \ 6)
+        End If
+        ProcessNumber = My.Computer.Clock.LocalTime.DayOfYear
+        If ProcessNumber Mod 2 = 0 Then
+            ProcessNumber = ProcessNumber \ 8
+            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+        Else
+            CaptchaString += CStr(ProcessNumber \ 37)
+        End If
+        TickRandom = My.Computer.Clock.TickCount.ToString
+        ProcessNumber = Val(TickRandom.Substring(TickRandom.Length - 1, 1))
+        If ProcessNumber Mod 2 = 0 Then
+            CaptchaString += CStr(ProcessNumber)
+        Else
+            ProcessNumber = Math.Abs(Int(Math.Cos(Val(TickRandom)) * 51))
+            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+        End If
+        ProcessNumber = My.Computer.Clock.LocalTime.Hour
+        If ProcessNumber Mod 2 = 0 Then
+            ProcessNumber = Math.Abs(Int(Math.Sin(Val(My.Computer.Clock.LocalTime.Year)) * 51))
+            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+        Else
+            CaptchaString += CStr(ProcessNumber \ 3)
+        End If
+        ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
+        If ProcessNumber > 521 Then
+            ProcessNumber = Math.Abs((ProcessNumber \ 10) - 52)
+            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+        Else
+            CaptchaString += CStr(My.Computer.Clock.LocalTime.Second \ 6)
+        End If
+        CaptchaGraf.Clear(Color.White)
+
+        For hasher As Integer = 0 To 5
+            CaptchaGraf.DrawString(CaptchaString.Substring(hasher, 1), DrawingFont, Brushes.Black, hasher * 20 + hasher + ProcessNumber \ 200, (hasher Mod 3) * (ProcessNumber \ 200))
+        Next
+        PictureBox.Text = CaptchaImage
+
+
+    End Sub
+
 
     Sub OpenConnection()
 
@@ -40,7 +106,7 @@ Public Class SignUp
 
     End Sub
 
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub Register_Click(sender As Object, e As RoutedEventArgs)
 
         'Dim TypeUser As String
         'Dim Type As String
@@ -97,7 +163,7 @@ Public Class SignUp
         RDate.Content = curDate & " " & Now.ToString("HH:mm:ss")
     End Sub
 
-    Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
+    Private Sub Update_Click(sender As Object, e As RoutedEventArgs)
 
         Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
         location = New Uri(location).LocalPath & "\"

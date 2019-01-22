@@ -31,7 +31,7 @@
 
             <Separator Grid.ColumnSpan="3" Margin="10,65,10,10"></Separator>
 
-            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2">
+            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                 <Label Content="Login:" Margin="10,10,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="Password:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
@@ -39,7 +39,7 @@
                 <Label Content="Email:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="DateTime:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
 
-                <Button Content="Register User" Foreground="White" Margin="10,30,10,-60" FontSize="12" FontStyle="Italic" Click="Button_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <Button Content="Register User" Foreground="White" Margin="10,10,10,-40" FontSize="12" FontStyle="Italic" Click="Register_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                             <GradientStop Color="#FF450E47" Offset="0.15"/>
@@ -49,6 +49,34 @@
                     </Button.Background>
                 </Button>
 
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" >
+                <Separator Margin="10,265,10,-270"></Separator>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,270,10,55">
+                <Label Content="Verification Code:" Foreground="White" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10,315,10,15">
+                <Label Content="Code:" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="1">
+            <PasswordBox x:Name="VerCode" Margin="10,315,10,-340" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <Button Content="Confirm registration" Foreground="White" Margin="25,25,25,-55" FontSize="12" FontStyle="Italic" Click="Button_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
+                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -88,7 +116,7 @@
 
             <StackPanel Grid.Column="2" Grid.Row="2">
 
-                <Button Content="Update Database" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"  Click="Button_Click_1" Margin="150,25,150,-55" >
+                <Button Content="Update Database" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"  Click="Update_Click" Margin="150,25,150,-55" >
 
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
@@ -101,6 +129,10 @@
 
             </StackPanel>
 
+            <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock x:Name="PictureBox" />
+            </StackPanel>
+            
         </Grid>
 
     </DockPanel>
