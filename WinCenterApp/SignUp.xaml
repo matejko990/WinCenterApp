@@ -39,7 +39,7 @@
                 <Label Content="Email:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="DateTime:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
 
-                <Button Content="Register User" Foreground="White" Margin="10,10,10,-40" FontSize="12" FontStyle="Italic" Click="Register_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <Button Content="Get Code" Foreground="White" Margin="10,10,10,-40" FontSize="12" FontStyle="Italic" Click="Register_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                             <GradientStop Color="#FF450E47" Offset="0.15"/>
@@ -60,7 +60,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Margin="10,315,10,15">
-                <Label Content="Code:" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label x:Name="Codelbl" Content="Code:" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="1">
@@ -68,7 +68,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Grid.Column="1">
-                <Button Content="Confirm registration" Foreground="White" Margin="25,25,25,-55" FontSize="12" FontStyle="Italic" Click="Button_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <Button Content="Confirm registration" Foreground="White" Margin="25,25,25,-55" FontSize="12" FontStyle="Italic" Click="Confirm_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                             <GradientStop Color="#FF450E47" Offset="0.15"/>
@@ -128,10 +128,13 @@
                 </Button>
 
             </StackPanel>
-
-            <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock x:Name="PictureBox" />
+            
+            <StackPanel Grid.Column="0" Grid.Row="2" >
+                <Border Background="#FF6A6D74" CornerRadius="10" Margin="10,25,10,-55" Opacity="0.65">
+                    <TextBlock x:Name="txtCaptcha" FontWeight="Bold" FontSize="16" FontStyle="Italic" Foreground="YellowGreen" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
             </StackPanel>
+
             
         </Grid>
 

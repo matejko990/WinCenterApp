@@ -1,9 +1,10 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
 Imports System.Data.DataTable
-Imports System.Text
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.ComponentModel
+'Imports System.Text
+'Imports System.Drawing
+'Imports System.Drawing.Drawing2D
 
 Public Class SignUp
 
@@ -13,65 +14,88 @@ Public Class SignUp
     Dim strDate As String = regDate.ToString("yyyy-MM-dd HH:mm:ss")
     Dim WithEvents TimerRefreshTime As New System.Windows.Threading.DispatcherTimer
 
-    Dim DrawingFont As New Font("Arial", 25)
-    Dim CaptchaImage As New BitmapImage
-    Dim CaptchaGraf As Graphics = Graphics.FromImage(CaptchaImage)
-    Dim Alphabet As String = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-    Dim CaptchaString, TickRandom As String
-    Dim ProcessNumber As Integer
+    'Dim DrawingFont As New Font("Arial", 25)
+    'Dim CaptchaImage As New BitmapImage
+    'Dim CaptchaGraf As Graphics = Graphics.FromImage(CaptchaImage)
+    'Dim Alphabet As String = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+    'Dim CaptchaString, TickRandom As String
+    'Dim ProcessNumber As Integer
 
-    Private Sub GenerateCaptcha()
+    'Private Sub GenerateCaptcha()
 
-        ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
-        If ProcessNumber < 521 Then
-            ProcessNumber = ProcessNumber \ 10
-            CaptchaString = Alphabet.Substring(ProcessNumber, 1)
-        Else
-            CaptchaString = CStr(My.Computer.Clock.LocalTime.Second \ 6)
-        End If
-        ProcessNumber = My.Computer.Clock.LocalTime.Second
-        If ProcessNumber < 30 Then
-            ProcessNumber = Math.Abs(ProcessNumber - 8)
-            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
-        Else
-            CaptchaString += CStr(My.Computer.Clock.LocalTime.Minute \ 6)
-        End If
-        ProcessNumber = My.Computer.Clock.LocalTime.DayOfYear
-        If ProcessNumber Mod 2 = 0 Then
-            ProcessNumber = ProcessNumber \ 8
-            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
-        Else
-            CaptchaString += CStr(ProcessNumber \ 37)
-        End If
-        TickRandom = My.Computer.Clock.TickCount.ToString
-        ProcessNumber = Val(TickRandom.Substring(TickRandom.Length - 1, 1))
-        If ProcessNumber Mod 2 = 0 Then
-            CaptchaString += CStr(ProcessNumber)
-        Else
-            ProcessNumber = Math.Abs(Int(Math.Cos(Val(TickRandom)) * 51))
-            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
-        End If
-        ProcessNumber = My.Computer.Clock.LocalTime.Hour
-        If ProcessNumber Mod 2 = 0 Then
-            ProcessNumber = Math.Abs(Int(Math.Sin(Val(My.Computer.Clock.LocalTime.Year)) * 51))
-            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
-        Else
-            CaptchaString += CStr(ProcessNumber \ 3)
-        End If
-        ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
-        If ProcessNumber > 521 Then
-            ProcessNumber = Math.Abs((ProcessNumber \ 10) - 52)
-            CaptchaString += Alphabet.Substring(ProcessNumber, 1)
-        Else
-            CaptchaString += CStr(My.Computer.Clock.LocalTime.Second \ 6)
-        End If
-        CaptchaGraf.Clear(Color.White)
+    '    ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
+    '    If ProcessNumber < 521 Then
+    '        ProcessNumber = ProcessNumber \ 10
+    '        CaptchaString = Alphabet.Substring(ProcessNumber, 1)
+    '    Else
+    '        CaptchaString = CStr(My.Computer.Clock.LocalTime.Second \ 6)
+    '    End If
+    '    ProcessNumber = My.Computer.Clock.LocalTime.Second
+    '    If ProcessNumber < 30 Then
+    '        ProcessNumber = Math.Abs(ProcessNumber - 8)
+    '        CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+    '    Else
+    '        CaptchaString += CStr(My.Computer.Clock.LocalTime.Minute \ 6)
+    '    End If
+    '    ProcessNumber = My.Computer.Clock.LocalTime.DayOfYear
+    '    If ProcessNumber Mod 2 = 0 Then
+    '        ProcessNumber = ProcessNumber \ 8
+    '        CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+    '    Else
+    '        CaptchaString += CStr(ProcessNumber \ 37)
+    '    End If
+    '    TickRandom = My.Computer.Clock.TickCount.ToString
+    '    ProcessNumber = Val(TickRandom.Substring(TickRandom.Length - 1, 1))
+    '    If ProcessNumber Mod 2 = 0 Then
+    '        CaptchaString += CStr(ProcessNumber)
+    '    Else
+    '        ProcessNumber = Math.Abs(Int(Math.Cos(Val(TickRandom)) * 51))
+    '        CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+    '    End If
+    '    ProcessNumber = My.Computer.Clock.LocalTime.Hour
+    '    If ProcessNumber Mod 2 = 0 Then
+    '        ProcessNumber = Math.Abs(Int(Math.Sin(Val(My.Computer.Clock.LocalTime.Year)) * 51))
+    '        CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+    '    Else
+    '        CaptchaString += CStr(ProcessNumber \ 3)
+    '    End If
+    '    ProcessNumber = My.Computer.Clock.LocalTime.Millisecond
+    '    If ProcessNumber > 521 Then
+    '        ProcessNumber = Math.Abs((ProcessNumber \ 10) - 52)
+    '        CaptchaString += Alphabet.Substring(ProcessNumber, 1)
+    '    Else
+    '        CaptchaString += CStr(My.Computer.Clock.LocalTime.Second \ 6)
+    '    End If
+    '    CaptchaGraf.Clear(Color.White)
 
-        For hasher As Integer = 0 To 5
-            CaptchaGraf.DrawString(CaptchaString.Substring(hasher, 1), DrawingFont, Brushes.Black, hasher * 20 + hasher + ProcessNumber \ 200, (hasher Mod 3) * (ProcessNumber \ 200))
-        Next
-        PictureBox.Text = CaptchaImage
+    '    For hasher As Integer = 0 To 5
+    '        CaptchaGraf.DrawString(CaptchaString.Substring(hasher, 1), DrawingFont, Brushes.Black, hasher * 20 + hasher + ProcessNumber \ 200, (hasher Mod 3) * (ProcessNumber \ 200))
+    '    Next
+    '    PictureBox.Text = CaptchaImage
 
+
+    'End Sub
+
+    Private Sub GeraCaptcha()
+        Try
+            Dim caracteresCaptcha As String = ""
+            caracteresCaptcha = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,R,S,T,U,V,W,Q,X,Y,Z"
+            caracteresCaptcha += "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,t,u,v,w,q,x,y,z"
+            caracteresCaptcha += "1,2,3,4,5,6,7,8,9,0"
+            caracteresCaptcha += "@,#,$,%,&,!,?"
+            Dim a As Char() = {","c}
+            Dim ar As String() = caracteresCaptcha.Split(a)
+            Dim senha As String = ""
+            Dim temp As String = ""
+            Dim r As New Random()
+            For i As Integer = 0 To 5
+                temp = ar((r.Next(0, ar.Length)))
+                senha += temp
+            Next
+            txtCaptcha.Text = senha
+        Catch ex As Exception
+            Throw ex
+        End Try
 
     End Sub
 
@@ -119,13 +143,8 @@ Public Class SignUp
         '    Type = "Admin"
         'End If
 
-        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text & "','" & strDate & "')"
-
-        'TimerRefreshTime.Stop()
-
-        SignUp(sql)
-        MsgBox("Sign Up Success about time: " & strDate)
-
+        GeraCaptcha()
+        VerCode.Focus()
 
     End Sub
 
@@ -235,6 +254,35 @@ Public Class SignUp
         Next
 
     End Sub
+
+    Private Sub Confirm_Click(sender As Object, e As RoutedEventArgs)
+
+        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text & "','" & strDate & "')"
+
+        'TimerRefreshTime.Stop()
+        If txtCaptcha.Text = VerCode.Password Then
+
+            If txtCaptcha.Text = "" Or VerCode.Password = "" Then
+
+                MsgBox("Sign Up Failed, Please generate a code!")
+                Codelbl.Foreground = Brushes.Red
+
+                Exit Sub
+
+            End If
+
+            SignUp(sql)
+            MsgBox("Sign Up Success about time: " & strDate)
+
+        Else
+
+            MsgBox("Sign Up Failed, Please try again enter code or generate new code!")
+
+        End If
+
+
+    End Sub
+
 
 End Class
 
