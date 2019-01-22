@@ -236,10 +236,5 @@
   <ItemGroup>
     <Resource Include="images\check.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="SQLDataBase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -53,7 +53,7 @@ Public Class SignUp
         '    Type = "Admin"
         'End If
 
-        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('MD5','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & strDate & "')"
+        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text & "','" & strDate & "')"
 
         'TimerRefreshTime.Stop()
 
@@ -115,7 +115,7 @@ Public Class SignUp
         Dim con As New SqlConnection(str)
         'Dim table As New DataTable("Table")
 
-        Dim com As String = "Select Id, Username, Password, TypeUser, RegisteredDate from [User]"
+        Dim com As String = "Select Id, Username, Password, TypeUser, Email, RegisteredDate from [User]"
 
         Dim Adpt As New SqlDataAdapter(com, con)
 
@@ -151,11 +151,13 @@ Public Class SignUp
         Dim table As New DataTable("Table")
         Dim username As DataRow = table.NewRow
 
-        Dim com As String = "Select Id, Username, Password, TypeUser, RegisteredDate from [User]"
+        Dim com As String = "Select Id, Username, Password, TypeUser, Email, RegisteredDate from [User]"
 
         Dim Adpt As New SqlDataAdapter(com, con)
 
         Dim ds As DataSet = New DataSet()
+
+
 
         Adpt.Fill(ds, "User")
 

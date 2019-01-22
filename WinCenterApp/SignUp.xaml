@@ -36,6 +36,7 @@
                 <Label Content="Login:" Margin="10,10,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="Password:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="TypeUser:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label Content="Email:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
                 <Label Content="DateTime:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
 
                 <Button Content="Register User" Foreground="White" Margin="10,30,10,-60" FontSize="12" FontStyle="Italic" Click="Button_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
@@ -64,7 +65,9 @@
                     <ComboBoxItem Content="User"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
                 </ComboBox>
 
-                <Label x:Name="RDate" Background="LightGray" Margin="10,128,10,-153" FontWeight="Bold" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="EmailBox" TextWrapping="Wrap" Margin="10,128,10,-153" VerticalContentAlignment="Center"/>
+
+                <Label x:Name="RDate" Background="LightGray" Margin="10,166,10,-192" FontWeight="Bold" VerticalContentAlignment="Center"/>
 
             </StackPanel>
 
@@ -77,6 +80,7 @@
                         <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                         <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
                         <DataGridTextColumn Header="TypeUser" Binding="{Binding TypeUser}"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
                         <DataGridTextColumn Header="RegisteredDate" Binding="{Binding RegisteredDate}" Width="650"/>
             </DataGrid.Columns>
                 </DataGrid>

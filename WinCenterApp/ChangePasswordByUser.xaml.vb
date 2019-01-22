@@ -38,7 +38,7 @@ Public Class ChangePasswordByUser
         LabelUser.Content = obj.username 'Environment.UserName
 
         con = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
-        Dim query As String = "UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('MD5', '" & RetypePassword.Password & "'),2) WHERE Username = @Username"
+        Dim query As String = "UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('SHA2_512', '" & RetypePassword.Password & "'),2) WHERE Username = @Username"
 
         '"UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('MD5', @Password),2) WHERE Username = @Username"
         con.Open()

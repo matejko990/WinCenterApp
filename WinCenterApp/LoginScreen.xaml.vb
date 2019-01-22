@@ -60,7 +60,7 @@ Public Class LoginScreen
         '    Type = "User"
         'End If
 
-        cmd = New SqlCommand("SELECT * FROM [User] WHERE Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND Password COLLATE Latin1_General_CS_AS =CONVERT(VARCHAR(50),HashBytes('MD5','" & txtPassword.Password & "'),2) AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
+        cmd = New SqlCommand("SELECT * FROM [User] WHERE Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND Password COLLATE Latin1_General_CS_AS =CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & txtPassword.Password & "'),2) AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
         'command.CommandText = "SELECT COUNT (*) FROM [User] WHERE Username= '" & txtUsername.Text & "'AND Password='" & txtPassword.Password & "';"
         'connection.Open()
 
@@ -270,6 +270,8 @@ Public Class LoginScreen
 
         End If
 
+        'Close connection
+        conn.Close()
 
     End Sub
 
