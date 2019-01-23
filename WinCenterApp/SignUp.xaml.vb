@@ -88,11 +88,21 @@ Public Class SignUp
             Dim senha As String = ""
             Dim temp As String = ""
             Dim r As New Random()
-            For i As Integer = 0 To 5
-                temp = ar((r.Next(0, ar.Length)))
-                senha += temp
-            Next
-            txtCaptcha.Text = senha
+
+            If RegisterLogin.Text = "" Or RegisterPassword.Password = "" Or TypeUser.Text = "" Or EmailBox.Text = "" Then
+
+                MsgBox("Please fill all data!")
+
+            Else
+
+                For i As Integer = 0 To 5
+                    temp = ar((r.Next(0, ar.Length)))
+                    senha += temp
+                Next
+                txtCaptcha.Text = senha
+
+            End If
+
         Catch ex As Exception
             Throw ex
         End Try
@@ -172,7 +182,7 @@ Public Class SignUp
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
 
-        TypeUser.Text = "Administrator"
+        'TypeUser.Text = "Administrator"
         TimerRefreshTime.Interval = New TimeSpan(0, 0, 1)
         TimerRefreshTime.Start()
 

@@ -88,7 +88,7 @@
                 <TextBox x:Name="RegisterLogin" TextWrapping="Wrap" Margin="10,12,10,-37" VerticalContentAlignment="Center"/>
                 <PasswordBox x:Name="RegisterPassword" Margin="10,50,10,-75" VerticalContentAlignment="Center" />
 
-                <ComboBox x:Name="TypeUser" Margin="10,88,10,-115" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontWeight="Bold" IsHitTestVisible="True">
+                <ComboBox x:Name="TypeUser" Margin="10,88,10,-115" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontWeight="Bold" IsHitTestVisible="True" SelectedIndex="1" IsSynchronizedWithCurrentItem="True" IsReadOnly="True">
                     <ComboBoxItem Content="Admin" FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch"/>
                     <ComboBoxItem Content="User"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
                 </ComboBox>
