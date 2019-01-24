@@ -281,12 +281,32 @@ Public Class SignUp
 
             End If
 
+            If System.Text.RegularExpressions.Regex.IsMatch(EmailBox.Text, "([a-z]{1,}[.][a-z]{1,}[@alior.pl]{9})") Then
+
+                If System.Text.RegularExpressions.Regex.IsMatch(RegisterLogin.Text, "([a-z]{2}[\d]{5})") Then
+
+                    'Kolejny if
+
+                Else
+
+                    MsgBox("Login is not validated! Fill Login as: pixxxxx")
+
+                End If
+
+            Else
+
+                MsgBox("Email is not validated!")
+
+            End If
+
             SignUp(sql)
+
             MsgBox("Sign Up Success about time: " & strDate)
+
 
         Else
 
-            MsgBox("Sign Up Failed, Please try again enter code or generate new code!")
+                MsgBox("Sign Up Failed, Please try again enter code or generate new code!")
 
         End If
 
