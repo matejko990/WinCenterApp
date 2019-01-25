@@ -92,10 +92,12 @@
                     <ComboBoxItem Content="Admin" FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch"/>
                     <ComboBoxItem Content="User"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
                 </ComboBox>
-
-                <TextBox x:Name="EmailBox" TextWrapping="Wrap" Margin="10,128,10,-153" VerticalContentAlignment="Center"/>
-
-                <Label x:Name="RDate" Background="LightGray" Margin="10,166,10,-192" FontWeight="Bold" VerticalContentAlignment="Center"/>
+                <Grid Margin="10,128,10,-153">
+                    <TextBox x:Name="EmailBox" TextWrapping="Wrap" Margin="0,0,70,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBox x:Name="EmailBox_1" TextWrapping="Wrap" Margin="130,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False"/>
+                </Grid>
+            
+        <Label x:Name="RDate" Background="LightGray" Margin="10,166,10,-192" FontWeight="Bold" VerticalContentAlignment="Center"/>
 
             </StackPanel>
 

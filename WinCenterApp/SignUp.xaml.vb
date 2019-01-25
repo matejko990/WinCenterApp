@@ -185,6 +185,8 @@ Public Class SignUp
         'TypeUser.Text = "Administrator"
         TimerRefreshTime.Interval = New TimeSpan(0, 0, 1)
         TimerRefreshTime.Start()
+        'RegisterLogin.Text = "pi"
+        EmailBox_1.Text = "@alior.pl"
 
     End Sub
 
@@ -267,7 +269,7 @@ Public Class SignUp
 
     Private Sub Confirm_Click(sender As Object, e As RoutedEventArgs)
 
-        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text & "','" & strDate & "')"
+        Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisteredDate) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text + EmailBox_1.Text & "','" & strDate & "')"
 
         'TimerRefreshTime.Stop()
         If txtCaptcha.Text = VerCode.Password Then
@@ -281,7 +283,7 @@ Public Class SignUp
 
             End If
 
-            If System.Text.RegularExpressions.Regex.IsMatch(EmailBox.Text, "([a-z]{1,}[.][a-z]{1,}[@alior.pl]{9})") Then
+            If System.Text.RegularExpressions.Regex.IsMatch(EmailBox.Text + EmailBox_1.Text, "([a-z]{1,}[.][a-z]{1,}[@alior.pl]{9})") Then
 
                 If System.Text.RegularExpressions.Regex.IsMatch(RegisterLogin.Text, "([a-z]{2}[\d]{5})") Then
 

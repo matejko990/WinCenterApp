@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCenterApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Foreground="White" Background="DimGray" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="images/icons8_Home.ico" Cursor="Hand" Loaded="Window_Loaded">
+        Title="MainWindow" Height="650" Width="1050" Foreground="White" Background="DimGray" WindowStartupLocation="CenterScreen" Icon="images/icons8_Home.ico" Cursor="Hand" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize">
 
     <Window.Resources>
 
@@ -125,151 +125,157 @@
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="100*"/>
+                <RowDefinition Height="85*"/>
                 <RowDefinition Height="400*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="12*"/>
-                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="251"/>
+                <ColumnDefinition Width="781"/>
             </Grid.ColumnDefinitions>
 
             <Grid Name="SidePanel" Grid.Row="1" Grid.Column="0">
                 <Canvas>
                     <DockPanel>
-                        <StackPanel Width="201" Margin="-150,0,0,0">
-                            <StackPanel.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
-                                    <GradientStop Color="#FF450E47" Offset="0.15"/>
-                                    <GradientStop Color="#FF422349" Offset="0.85"/>
-                                    <GradientStop Color="#FFA01794" Offset="0.5"/>
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
+                        <Border CornerRadius="6"
+                BorderBrush="Gray"
+                Background="LightGray"
+                BorderThickness="2"
+                Padding="1">
+                            <StackPanel Width="245" Margin="-200,0,0,0">
+                                <StackPanel.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.95">
+                                        <GradientStop Color="#FF450E47" Offset="0.15"/>
+                                        <GradientStop Color="#FF422349" Offset="0.85"/>
+                                        <GradientStop Color="#FFA01794" Offset="0.5"/>
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
 
-                            <StackPanel.Style>
-                                <Style TargetType="StackPanel">
-                                    <Style.Triggers>
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Style.Triggers>
 
-                                        <!--<Trigger Property="IsMouseOver" Value="True">
+                                            <!--<Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="Green"/>
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="False">
                                     <Setter Property="Background" Value="#2B303B"/>
                                 </Trigger>-->
 
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <EventTrigger.Actions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-150,0,0,0" To="0,0,0,0" DecelerationRatio=".9"
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="-200,0,0,0" To="0,0,0,0" DecelerationRatio=".9"
                                                                     Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger.Actions>
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <EventTrigger.Actions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="-150,0,0,0" DecelerationRatio=".9"
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" To="-200,0,0,0" DecelerationRatio=".9"
                                                                     Duration="0:0:0.7"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger.Actions>
-                                        </EventTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
 
-                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
-                                <Label x:Name="Click1" Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16" MouseMove="Label_MouseMove" MouseLeave="Label_MouseLeave">
+                                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="230" Height="50">
+                                    <Label x:Name="Click1" Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16" MouseMove="Label_MouseMove">
 
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Style.Triggers>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Style.Triggers>
 
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="Orange"/>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="White" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="Orange"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="White" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
 
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
 
-                                </Label>
-                                <Image Source="images/dashboard.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
-                            </DockPanel>
+                                    </Label>
+                                    <Image Source="images/dashboard.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                                </DockPanel>
 
-                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
-                                <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
+                                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="230" Height="50">
+                                    <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
 
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Style.Triggers>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Style.Triggers>
 
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="Orange"/>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="White" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="Orange"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="White" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
 
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
 
-                                </Label>
-                                <Image Source="images/pencil-writing-on-a-paper.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
-                            </DockPanel>
+                                    </Label>
+                                    <Image Source="images/pencil-writing-on-a-paper.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                                </DockPanel>
 
-                            <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="181" Height="50">
-                                <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
+                                <DockPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0" Width="230" Height="50">
+                                    <Label Content="Dasboards" VerticalAlignment="Center" Width="100" FontWeight="Bold" FontSize="16">
 
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Style.Triggers>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Style.Triggers>
 
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="Orange"/>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Foreground">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="White" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="Orange"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="White" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
 
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
 
-                                </Label>
-                                <Image Source="images/folder.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
-                            </DockPanel>
-                        </StackPanel>
+                                    </Label>
+                                    <Image Source="images/folder.png" HorizontalAlignment="Right" Margin="5" Width="25" Height="25"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
                     </DockPanel>
                 </Canvas>
             </Grid>
@@ -282,7 +288,7 @@
                 </Image>
             </Grid>
 
-            <Grid x:Name="Range_Calendar" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Grid x:Name="Range_Calendar" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Canvas.ZIndex="10000000">
 
                 <StackPanel>
                     <Calendar Name="calendar1" Margin="5"
@@ -320,10 +326,10 @@
                 </Grid.Style>
             </Grid>
 
-            <Grid Name="DateTimeZone" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Grid Name="DateTimeZone" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Label Name="lblTime" Height="30" Width="85" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Margin="0,10,5,0" Foreground="White"/>
-                    <ToggleButton x:Name="btnFirst" Content="Kalendarz" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="150" Grid.Column="1" Grid.Row="1" Margin="0,10,5,0" 
+                    <Label Name="lblTime" Height="30" Width="85" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Margin="0,10,0,0" Foreground="White"/>
+                    <ToggleButton x:Name="btnFirst" Content="Kalendarz" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="150" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" 
                               BorderBrush="#FF444444" Opacity="0.85" FontWeight="Bold" FontSize="14">
 
                         <ToggleButton.Style>
@@ -360,24 +366,25 @@
                 </StackPanel>
             </Grid>
 
-            <Grid x:Name="Dashboards" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+            <!--<Grid x:Name="Dashboards" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
 
                 <TextBox Width="100" Height="50" Text="Siema" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="White"/>
 
-                <!--<Grid.Background>
+                --><!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                     <GradientStop Color="#FF450E47" Offset="0.15"/>
                     <GradientStop Color="#FF422349" Offset="0.85"/>
                     <GradientStop Color="#FFA01794" Offset="0.5"/>
                 </LinearGradientBrush>
-            </Grid.Background>-->
+            </Grid.Background>--><!--
 
-            </Grid>
+            </Grid>-->
+            
             <Grid Grid.Column="1" HorizontalAlignment="Left" Height="64" Margin="18,10,0,0" VerticalAlignment="Top" Width="402">
                 <Label Content="Witaj,&#xA;w aplikacji do zarządzania narzędziami Ab!" HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" VerticalAlignment="Top" Width="382" Background="{x:Null}" Foreground="White" FontWeight="Bold" FontSize="12"/>
             </Grid>
 
-            <Button Click="lgout" Content="LogOut" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" Width="60" Grid.Column="1" Grid.Row="1" Margin="5" 
+            <Button Click="lgout" Content="LogOut" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" Width="60" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" 
                               BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
@@ -398,6 +405,34 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+
+            <Grid x:Name="Dashboards0" Grid.Row="1" Grid.Column="1" Visibility="Visible">
+
+                <TextBox Text="Wyszukiwarka przelewów podatkowych" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="White" RenderTransformOrigin="0.07,0.34" Margin="10,10,255,295"/>
+
+                <Button Content="Wyszukaj" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="223,0,217,35" 
+                              BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Button_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <TextBox x:Name="Search" HorizontalAlignment="Left" Height="22" Margin="258,48,0,0" TextWrapping="Wrap" Text="nr. rachunku" VerticalAlignment="Top" Width="264"/>
+
+                <Label Content="Podaj rachunek: " Grid.Column="1" Foreground="White" HorizontalAlignment="Left" Height="26" Margin="18,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="193"/>
+                <TextBox x:Name="wynik" Grid.Column="1" Background="White" Foreground="Black" HorizontalAlignment="Left" Height="139" Margin="33,115,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Top" Width="533"/>
+                <!--<Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
+                    <GradientStop Color="#FF450E47" Offset="0.15"/>
+                    <GradientStop Color="#FF422349" Offset="0.85"/>
+                    <GradientStop Color="#FFA01794" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Grid.Background>-->
+
+            </Grid>
 
         </Grid>
 

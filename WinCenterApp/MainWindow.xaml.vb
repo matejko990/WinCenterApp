@@ -51,16 +51,16 @@ Class MainWindow
 
     Private Sub Label_MouseMove(sender As Object, e As MouseEventArgs) Handles Click1.MouseMove
 
-        Dashboards.Visibility = Visibility.Visible
+        Dashboards0.Visibility = Visibility.Visible
 
     End Sub
 
-    'This one I would not take'
-    Private Sub Label_MouseLeave(sender As Object, e As MouseEventArgs) Handles Click1.MouseLeave
+    ''This one I would not take'
+    'Private Sub Label_MouseLeave(sender As Object, e As MouseEventArgs) Handles Click1.MouseLeave
 
-        Dashboards.Visibility = Visibility.Collapsed
+    '    Dashboards0.Visibility = Visibility.Collapsed
 
-    End Sub
+    'End Sub
 
     Private Sub Lgout(sender As Object, e As RoutedEventArgs)
 
@@ -79,6 +79,41 @@ Class MainWindow
         Dim ChangePasswordByUser = New ChangePasswordByUser
 
         ChangePasswordByUser.Show()
+
+    End Sub
+
+    'Private Sub Label_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles Click1.MouseDoubleClick
+
+    '    Dashboards0.Visibility = Visibility.Visible
+
+    'End Sub
+
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
+        Dim files As New List(Of String)
+        files.AddRange(IO.Directory.GetFiles("X:\Archiwum\ELIXIR\OUT\2018\12\SW\", "*.bak").
+               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
+
+        'Dim newdir As Object = files
+
+        For j = 0 To files.Count - 1
+
+            Dim value As String = String.Join("", files(j)) & ".bak"
+
+            Dim lines = System.IO.File.ReadAllLines("X:\Archiwum\ELIXIR\OUT\2018\12\SW\" & value, System.Text.Encoding.Default)
+            For i = 0 To lines.Length - 1
+                If lines(i).Contains(Search.Text) Then
+                    wynik.Text = lines(i)
+
+                Else
+
+                    'wynik.Text = ""
+
+                End If
+            Next
+            System.IO.File.WriteAllLines("X:\Archiwum\ELIXIR\OUT\2018\12\SW\" & value, lines)
+
+        Next
 
     End Sub
 
