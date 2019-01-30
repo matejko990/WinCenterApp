@@ -91,16 +91,22 @@ Class MainWindow
     Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
 
         Dim files As New List(Of String)
-        files.AddRange(IO.Directory.GetFiles("X:\Archiwum\ELIXIR\OUT\2018\12\SW\", "*.bak").
+        files.AddRange(IO.Directory.GetFiles("X:\Archiwum\ELIXIR\OUT\20" & Year.Text & "\" & Month.Text & "\SW\", "*.bak").
                Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
 
         'Dim newdir As Object = files
 
-        For j = 0 To files.Count - 1
+        'For j = 0 To files.Count - 1
+        For Each file As String In files
 
-            Dim value As String = String.Join("", files(j)) & ".bak"
+            Dim x As String = "SW" & Year.Text & Month.Text & DayFrom.Text
+            Dim y As String = "SW" & Year.Text & Month.Text & DayTo.Text
 
-            Dim lines = System.IO.File.ReadAllLines("X:\Archiwum\ELIXIR\OUT\2018\12\SW\" & value, System.Text.Encoding.Default)
+            Dim value As String = String.Join("", files(file)) & ".bak"
+
+            MsgBox(value)
+
+            Dim lines = System.IO.File.ReadAllLines("X:\Archiwum\ELIXIR\OUT\2019\01\SW\" & value, System.Text.Encoding.Default)
             For i = 0 To lines.Length - 1
                 If lines(i).Contains(Search.Text) Then
                     wynik.Text = lines(i)
@@ -110,6 +116,7 @@ Class MainWindow
                     'wynik.Text = ""
 
                 End If
+
             Next
             System.IO.File.WriteAllLines("X:\Archiwum\ELIXIR\OUT\2018\12\SW\" & value, lines)
 
@@ -117,4 +124,9 @@ Class MainWindow
 
     End Sub
 
+    Private Sub Search_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Search.MouseDoubleClick
+
+        Search.Clear()
+
+    End Sub
 End Class

@@ -125,15 +125,30 @@
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="85*"/>
-                <RowDefinition Height="400*"/>
+                <RowDefinition Height="108*"/>
+                <RowDefinition Height="476*"/>
+                <RowDefinition Height="35*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="251"/>
                 <ColumnDefinition Width="781"/>
             </Grid.ColumnDefinitions>
+            
+            <Separator Grid.ColumnSpan="2" Margin="10,95,10,-10" Visibility="Visible" Background="#FFBFBBBB"/>
+            <Separator Grid.ColumnSpan="2" Margin="10,570,10,-470" Visibility="Visible" Background="#FFBFBBBB"/>
+            
+            <Separator  Margin="-50,165,480,250" Visibility="Visible" Background="White" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Row="1">
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
 
-            <Grid Name="SidePanel" Grid.Row="1" Grid.Column="0">
+            <Grid Name="SidePanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
                 <Canvas>
                     <DockPanel>
                         <Border CornerRadius="6"
@@ -280,7 +295,7 @@
                 </Canvas>
             </Grid>
 
-            <Grid Name="Images" Margin="0.5">
+            <Grid Name="Images">
                 <Image Source="images/org.png" Grid.Row="0" Stretch="Fill" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity = "0.8" Grid.ColumnSpan="2">
                     <Image.Effect>
                         <DropShadowEffect Opacity="0.5" Direction="100" Color="#FF9C9C9C" ShadowDepth="1" RenderingBias="Quality"/>
@@ -326,7 +341,7 @@
                 </Grid.Style>
             </Grid>
 
-            <Grid Name="DateTimeZone" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5">
+            <Grid Name="DateTimeZone" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,15,10,15">
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Label Name="lblTime" Height="30" Width="85" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" Margin="0,10,0,0" Foreground="White"/>
                     <ToggleButton x:Name="btnFirst" Content="Kalendarz" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="150" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" 
@@ -370,47 +385,53 @@
 
                 <TextBox Width="100" Height="50" Text="Siema" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="White"/>
 
-                --><!--<Grid.Background>
+                -->
+            <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                     <GradientStop Color="#FF450E47" Offset="0.15"/>
                     <GradientStop Color="#FF422349" Offset="0.85"/>
                     <GradientStop Color="#FFA01794" Offset="0.5"/>
                 </LinearGradientBrush>
-            </Grid.Background>--><!--
+            </Grid.Background>-->
+            <!--
 
             </Grid>-->
-            
+
             <Grid Grid.Column="1" HorizontalAlignment="Left" Height="64" Margin="18,10,0,0" VerticalAlignment="Top" Width="402">
                 <Label Content="Witaj,&#xA;w aplikacji do zarządzania narzędziami Ab!" HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" VerticalAlignment="Top" Width="382" Background="{x:Null}" Foreground="White" FontWeight="Bold" FontSize="12"/>
             </Grid>
 
-            <Button Click="lgout" Content="LogOut" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" Width="60" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" 
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Button Click="lgout" Content="LogOut" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" Width="60" Margin="0,0,10,5" 
                               BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
-                        <GradientStop Color="#FF450E47" Offset="0.15"/>
-                        <GradientStop Color="#FF422349" Offset="0.85"/>
-                        <GradientStop Color="#FFA01794" Offset="0.5"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
-            <Button Content="Change password" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="25" Grid.Column="1" Grid.Row="1" Margin="390,0,70,5" 
+                <Button Content="Change password" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="25" Margin="500,0,75,5" 
                               BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Chngpass">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
-                        <GradientStop Color="#FF450E47" Offset="0.15"/>
-                        <GradientStop Color="#FF422349" Offset="0.85"/>
-                        <GradientStop Color="#FFA01794" Offset="0.5"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
-            <Grid x:Name="Dashboards0" Grid.Row="1" Grid.Column="1" Visibility="Visible">
+            </Grid>
 
-                <TextBox Text="Wyszukiwarka przelewów podatkowych" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="White" RenderTransformOrigin="0.07,0.34" Margin="10,10,255,295"/>
+            <Grid x:Name="Dashboards0" Grid.Row="1" Grid.Column="1" Visibility="Visible" Grid.RowSpan="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                <Button Content="Wyszukaj" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="223,0,217,35" 
+                <Button Content="Wyszukaj" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="319,0,313,35" 
                               BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Button_Click">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
@@ -420,10 +441,25 @@
                         </LinearGradientBrush>
                     </Button.Background>
                 </Button>
-                <TextBox x:Name="Search" HorizontalAlignment="Left" Height="22" Margin="258,48,0,0" TextWrapping="Wrap" Text="nr. rachunku" VerticalAlignment="Top" Width="264"/>
 
-                <Label Content="Podaj rachunek: " Grid.Column="1" Foreground="White" HorizontalAlignment="Left" Height="26" Margin="18,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="193"/>
-                <TextBox x:Name="wynik" Grid.Column="1" Background="White" Foreground="Black" HorizontalAlignment="Left" Height="139" Margin="33,115,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Top" Width="533"/>
+                <Label Content="Wyszukiwarka przelewów podatkowych!" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="25,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" FontStyle="Italic"/>
+
+                <Label Content="Rok: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,85,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="Year" HorizontalAlignment="Left" Height="25" Margin="365,85,0,0" TextWrapping="Wrap" Text="19" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center"/>
+
+                <Label Content="Miesiąc: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,115,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="Month" HorizontalAlignment="Left" Height="25" Margin="365,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center"/>
+
+                <Label Content="dzień od: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,145,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="DayFrom" HorizontalAlignment="Left" Height="25" Margin="365,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center"/>
+
+                <Label Content="dzień do: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,175,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="DayTo" HorizontalAlignment="Left" Height="25" Margin="365,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center"/>
+
+                <Label Content="Szukana fraza: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,205,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="Search" HorizontalAlignment="Left" Height="25" Margin="365,205,0,0" TextWrapping="Wrap" Text="np. nrumer rachunku" VerticalAlignment="Top" Width="350" VerticalContentAlignment="Center"/>
+                
+                <TextBox x:Name="wynik" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="130" Margin="0,0,00,80" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Bottom" Width="650"/>
                 <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                     <GradientStop Color="#FF450E47" Offset="0.15"/>
