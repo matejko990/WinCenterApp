@@ -133,10 +133,10 @@
                 <ColumnDefinition Width="251"/>
                 <ColumnDefinition Width="781"/>
             </Grid.ColumnDefinitions>
-            
+
             <Separator Grid.ColumnSpan="2" Margin="10,95,10,-10" Visibility="Visible" Background="#FFBFBBBB"/>
             <Separator Grid.ColumnSpan="2" Margin="10,570,10,-470" Visibility="Visible" Background="#FFBFBBBB"/>
-            
+
             <Separator  Margin="-50,165,480,250" Visibility="Visible" Background="White" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Row="1">
                 <Separator.RenderTransform>
                     <TransformGroup>
@@ -431,8 +431,19 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button Content="Wyszukaj" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="319,0,313,35" 
-                              BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Button_Click">
+                <Button Content="Wyszukaj" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="231,0,401,35" 
+                              BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Search_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button Content="Wyświetl wynik" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="25" Width="150" Margin="395,0,237,35" 
+                BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="ShowWynik_Click">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
                             <GradientStop Color="#FF450E47" Offset="0.15"/>
@@ -458,8 +469,8 @@
 
                 <Label Content="Szukana fraza: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,205,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
                 <TextBox x:Name="Search" HorizontalAlignment="Left" Height="25" Margin="365,205,0,0" TextWrapping="Wrap" Text="np. nrumer rachunku" VerticalAlignment="Top" Width="350" VerticalContentAlignment="Center"/>
-                
-                <TextBox x:Name="wynik" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="130" Margin="0,0,00,80" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Bottom" Width="650"/>
+
+                <TextBox x:Name="wynik" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="130" Margin="0,0,00,80" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Bottom" Width="650" FontStyle="Italic" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                 <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                     <GradientStop Color="#FF450E47" Offset="0.15"/>
