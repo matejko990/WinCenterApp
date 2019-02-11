@@ -455,6 +455,8 @@
 
                 <Label Content="Wyszukiwarka przelewów podatkowych!" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Margin="25,15,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" FontStyle="Italic"/>
 
+                <Separator Grid.Column="1" Grid.Row="1" Margin="30,50,250,400" Visibility="Visible" Background="#FFBFBBBB"></Separator>
+
                 <Label Content="Rok: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,85,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
                 <TextBox x:Name="Year" HorizontalAlignment="Left" Height="25" Margin="365,85,0,0" TextWrapping="Wrap" Text="19" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center"/>
 
@@ -468,9 +470,12 @@
                 <TextBox x:Name="DayTo" HorizontalAlignment="Left" Height="25" Margin="365,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" VerticalContentAlignment="Center" MaxLength="2" MaxLines="1" HorizontalContentAlignment="Center"/>
 
                 <Label Content="Szukana fraza: " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="65,205,0,0" VerticalAlignment="Top" Width="200" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
-                <TextBox x:Name="Search" HorizontalAlignment="Left" Height="25" Margin="365,205,0,0" TextWrapping="Wrap" Text="np. nrumer rachunku" VerticalAlignment="Top" Width="350" VerticalContentAlignment="Center" MaxLength="35" MaxLines="1"/>
+                <TextBox x:Name="Search" HorizontalAlignment="Left" Height="25" Margin="365,205,0,0" TextWrapping="Wrap" Text="np. numer rachunku" VerticalAlignment="Top" Width="350" VerticalContentAlignment="Center" MaxLength="35" MaxLines="1"/>
 
-                <TextBox x:Name="wynik" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="130" Margin="0,0,00,80" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Bottom" Width="650" FontStyle="Italic" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                <Label Content="Szukana fraza: 'ELX#... " Foreground="White" HorizontalAlignment="Left" Height="26" Margin="450,115,0,0" VerticalAlignment="Top" Width="150" FontSize="14" VerticalContentAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="Search_ELX" HorizontalAlignment="Left" Height="25" Margin="450,145,0,0" TextWrapping="Wrap" Text="ELX#" VerticalAlignment="Top" Width="265" VerticalContentAlignment="Center" MaxLength="35" MaxLines="1"/>
+                
+                <TextBox x:Name="Score" Background="White" Foreground="Black" HorizontalAlignment="Center" Height="130" Margin="0,0,00,80" TextWrapping="Wrap" Text="Okno wyniku" VerticalAlignment="Bottom" Width="650" FontStyle="Italic" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                 <!--<Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
                     <GradientStop Color="#FF450E47" Offset="0.15"/>
@@ -480,6 +485,16 @@
             </Grid.Background>-->
 
             </Grid>
+            <Button Content="Wyczyść" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="24" Width="100" Margin="550,0,0,365" 
+                BorderBrush="#FF444444" Foreground="White" Opacity="0.85" FontWeight="Bold" FontSize="14" Click="Clear_Click" Grid.Row="1" Grid.Column="1">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" Opacity="0.65">
+                        <GradientStop Color="#FF450E47" Offset="0.15"/>
+                        <GradientStop Color="#FF422349" Offset="0.85"/>
+                        <GradientStop Color="#FFA01794" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
 
         </Grid>
 

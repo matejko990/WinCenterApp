@@ -109,7 +109,7 @@ Class MainWindow
         Dim z As Integer
         z = DayTo.Text - DayFrom.Text + 1
 
-        wynik.Clear()
+        Score.Clear()
 
         Dim j As Integer = 0
 
@@ -143,8 +143,8 @@ Class MainWindow
                 For i = 0 To lines.Length - 1
                     Dim c As Integer = lines.Length
                     If lines(i).Contains(Search.Text) Then
-                        If wynik.Text <> "" Then
-                            wynik.Text = wynik.Text + lines(i) + vbCrLf
+                        If Score.Text <> "" Then
+                            Score.Text = Score.Text + lines(i) + vbCrLf
 
                             Using writer As New StreamWriter(filePath, True)
                                 If File.Exists(filePath) Then
@@ -154,7 +154,7 @@ Class MainWindow
 
                         Else
 
-                            wynik.Text = lines(i) + vbCrLf
+                            Score.Text = lines(i) + vbCrLf
 
                             Using writer As New StreamWriter(filePath, True)
                                 If File.Exists(filePath) Then
@@ -192,8 +192,8 @@ Class MainWindow
                     Dim lines = System.IO.File.ReadAllLines(files & swelx, System.Text.Encoding.Default)
                     For k = 0 To lines.Length - 1
                         If lines(k).Contains(Search.Text) Then
-                            If wynik.Text <> "" Then
-                                wynik.Text = wynik.Text + lines(k) + vbCrLf
+                            If Score.Text <> "" Then
+                                Score.Text = Score.Text + lines(k) + vbCrLf
 
                                 Using writer As New StreamWriter(filePath, True)
                                     If File.Exists(filePath) Then
@@ -203,7 +203,7 @@ Class MainWindow
 
                             Else
 
-                                wynik.Text = lines(k) + vbCrLf
+                                Score.Text = lines(k) + vbCrLf
 
                                 Using writer As New StreamWriter(filePath, True)
                                     If File.Exists(filePath) Then
@@ -265,6 +265,17 @@ Class MainWindow
         If System.IO.File.Exists(location & "wynik.txt") Then
             Process.Start(location & "wynik.txt")
         End If
+
+    End Sub
+
+    Private Sub Clear_Click(sender As Object, e As RoutedEventArgs)
+
+        Month.Clear()
+        DayFrom.Clear()
+        DayTo.Clear()
+        Search.Clear()
+        Score.Clear()
+        Search_ELX.Clear()
 
     End Sub
 End Class
