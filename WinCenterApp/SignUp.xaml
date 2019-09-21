@@ -3,10 +3,183 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WinCenterApp"
+        xmlns:local="clr-namespace:mMangerCenter"
         mc:Ignorable="d"
-        Title="SignUp" Loaded="Window_Loaded" ResizeMode="CanResizeWithGrip" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="550" Width="850" WindowStartupLocation="CenterScreen">
-    
+        Title="SignUp" Loaded="Window_Loaded" ResizeMode="CanResizeWithGrip" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="550" Width="850" WindowStartupLocation="CenterScreen" MinWidth="850" MinHeight="550" MaxWidth="1360" MaxHeight="768" Closed="Window_Closed" IsVisibleChanged="Window_IsVisibleChanged">
+
+    <Window.Resources>
+
+        <Style TargetType="Button" x:Key="GelButton">
+            <Setter Property="Background" Value ="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootElement">
+                            <!-- drop shadow - needs to be blurred for correct effect -->
+                            <Rectangle Fill="{x:Null}" Margin="1,1,0,0" RadiusX="6" RadiusY="6">
+                                <Rectangle.BitmapEffect>
+                                    <BlurBitmapEffect Radius="3" />
+                                </Rectangle.BitmapEffect>
+                            </Rectangle>
+                            <Grid x:Name="mainButton"
+                                Margin="0,0,1,1"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="0.0" Y="0.0"/>
+                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Rectangle x:Name="mainRect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6">
+                                </Rectangle>
+
+                                <!-- transparent rect -->
+                                <Rectangle x:Name="glowRect" Margin="1,1,1,1" RadiusX="5" RadiusY="5">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="2,0">
+                                            <GradientStop Color="#FF450E47" Offset="0.15"/>
+                                            <GradientStop Color="#FF422349" Offset="0.85"/>
+                                            <GradientStop Color="#FFA01794" Offset="0.5"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                             Margin="4,0,4,0"
+                             Content="{TemplateBinding Content}"
+                             VerticalAlignment="Center" />
+
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="0.0" Y="0.0"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                                <!--<Setter Property="Foreground" Value="Orange" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="1" Y="1"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Orange"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="Button">
+            <Setter Property="Background" Value ="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootElement">
+                            <!-- drop shadow - needs to be blurred for correct effect -->
+                            <Rectangle Fill="{x:Null}" Margin="1,1,0,0" RadiusX="6" RadiusY="6">
+                                <Rectangle.BitmapEffect>
+                                    <BlurBitmapEffect Radius="3" />
+                                </Rectangle.BitmapEffect>
+                            </Rectangle>
+                            <Grid x:Name="mainButton"
+                                Margin="0,0,1,1"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="0.0" Y="0.0"/>
+                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Rectangle x:Name="mainRect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6">
+                                </Rectangle>
+
+                                <!-- transparent rect -->
+                                <Rectangle x:Name="glowRect" Margin="1,1,1,1" RadiusX="5" RadiusY="5">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="2,0">
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                             Margin="4,0,4,0"
+                             Content="{TemplateBinding Content}"
+                             VerticalAlignment="Center" />
+
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="0.0" Y="0.0"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                                <!--<Setter Property="Foreground" Value="Orange" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="1" Y="1"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Orange"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
     <DockPanel>
 
         <Grid>
@@ -34,91 +207,106 @@
             <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                 <Label Content="Login:" Margin="10,10,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
-                <Label Content="Password:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
-                <Label Content="TypeUser:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
-                <Label Content="Email:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
-                <Label Content="DateTime:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label Content="Hasło:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label Content="Typ konta:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label Content="E-mail:"  Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+                <Label Content="Czas rej.:" Margin="10,0,10,10" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
 
-                <Button Content="Get Code" Foreground="White" Margin="10,10,10,-40" FontSize="12" FontStyle="Italic" Click="Register_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
-                            <GradientStop Color="#FF450E47" Offset="0.15"/>
-                            <GradientStop Color="#FF422349" Offset="0.85"/>
-                            <GradientStop Color="#FFA01794" Offset="0.5"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
+            </StackPanel>
 
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="3" >
+                <Separator Margin="10,10,10,-13"></Separator>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2" >
-                <Separator Margin="10,265,10,-270"></Separator>
-            </StackPanel>
-            
-            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,270,10,55">
-                <Label Content="Verification Code:" Foreground="White" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+                <Separator Margin="10,271,10,-275"></Separator>
             </StackPanel>
 
-            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10,315,10,15">
-                <Label x:Name="Codelbl" Content="Code:" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,280,10,45">
+                <Label Content="Kod weryfikacyjny:" Foreground="White" FontSize="16" FontWeight="Bold" FontStyle="Italic"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10,325,10,5">
+                <Label x:Name="Codelbl" Content="Kod:" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="1">
-            <PasswordBox x:Name="VerCode" Margin="10,315,10,-340" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <PasswordBox x:Name="VerCode" Margin="10,325,10,-350" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLength="10"/>
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Grid.Column="1">
-                <Button Content="Confirm registration" Foreground="White" Margin="25,25,25,-55" FontSize="12" FontStyle="Italic" Click="Confirm_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Grid Grid.Row="2" Grid.Column="1" Margin="10,30,10,10" VerticalAlignment="Center">
+                <Button Content="Wygeneruj kod" Style="{StaticResource GelButton}" Height="25" FontSize="12" FontStyle="Italic" Click="GetCode_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <Button Margin="20,-30,30,-20" Style="{StaticResource Button}" Click="Back_Click" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{x:Null}" BorderBrush="{x:Null}">
                     <Button.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
-                            <GradientStop Color="#FF450E47" Offset="0.15"/>
-                            <GradientStop Color="#FF422349" Offset="0.85"/>
-                            <GradientStop Color="#FFA01794" Offset="0.5"/>
-                        </LinearGradientBrush>
+                        <ImageBrush ImageSource="images/account-logout-512.ico" TileMode="Tile"/>
                     </Button.Background>
                 </Button>
-            </StackPanel>
+            </Grid>
 
-            <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label Content="REGISTERED USER'S PANEL (ADD'S, MODIFY, DELETE, ETC.)" Margin="10,20,10,0" FontSize="20" Foreground="White" FontWeight="Bold"/>
-            </StackPanel>
+            <Grid Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Label Content="PANEL REJESTRACJI NOWEGO KONTA/USUWANIA KONTA" Margin="5,0,120,40" FontSize="20" Foreground="White" FontWeight="Bold"/>
+                <Label Name="lblTime" Height="30" Width="85" HorizontalAlignment="Right" FontWeight="Bold" FontSize="18" Margin="0,0,10,40" Foreground="White"/>
+            </Grid>
 
             <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="2">
 
-                <TextBox x:Name="RegisterLogin" TextWrapping="Wrap" Margin="10,12,10,-37" VerticalContentAlignment="Center"/>
-                <PasswordBox x:Name="RegisterPassword" Margin="10,50,10,-75" VerticalContentAlignment="Center" />
+                <TextBox x:Name="RegisterLogin" TextWrapping="Wrap" Margin="10,12,10,-37" VerticalContentAlignment="Center" MaxLength="7"/>
+                <PasswordBox x:Name="RegisterPassword" Margin="10,50,10,-75" VerticalContentAlignment="Center" MaxLength="35"/>
 
                 <ComboBox x:Name="TypeUser" Margin="10,88,10,-115" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" FontStyle="Italic" FontWeight="Bold" IsHitTestVisible="True" SelectedIndex="1" IsSynchronizedWithCurrentItem="True" IsReadOnly="True">
-                    <ComboBoxItem Content="Admin" FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch"/>
-                    <ComboBoxItem Content="User"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
+                    <ComboBoxItem x:Name="AdminItem" Content="Administrator" FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch"/>
+                    <ComboBoxItem x:Name="UserItem" Content="Użytkownik"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
                 </ComboBox>
                 <Grid Margin="10,128,10,-153">
-                    <TextBox x:Name="EmailBox" TextWrapping="Wrap" Margin="0,0,70,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch"/>
-                    <TextBox x:Name="EmailBox_1" TextWrapping="Wrap" Margin="130,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" IsEnabled="False"/>
+                    <TextBox x:Name="EmailBox" Margin="0,0,70,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" MaxLength="35"/>
+                    <TextBox x:Name="EmailBox_1" Margin="130,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="60" IsEnabled="False"/>
                 </Grid>
-            
-        <Label x:Name="RDate" Background="LightGray" Margin="10,166,10,-192" FontWeight="Bold" VerticalContentAlignment="Center"/>
+
+                <Label x:Name="RDate" Background="LightGray" Margin="10,166,10,-192" FontWeight="Bold" VerticalContentAlignment="Center"/>
+
+                <Button Content="Zarejestruj konto" Style="{StaticResource GelButton}" Margin="10,205,10,-257"  Height="25" FontSize="12" FontStyle="Italic" Click="CreateUserOrAdmin_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                </Button>
 
             </StackPanel>
 
             <Grid Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <DataGrid x:Name="DateBaseSqlView" IsReadOnly="True" AutoGenerateColumns="False" Margin="15,10,15,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontStyle="Italic" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-                    
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGrid x:Name="DateBaseSqlView" ItemsSource="{Binding}" IsReadOnly="True" AutoGenerateColumns="False" Margin="15,10,15,10" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontStyle="Italic" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDelete}" Value="False">
+                                    <Setter Property="Background" Value="Green"></Setter>
+                                    </DataTrigger>
+                                <DataTrigger Binding="{Binding IsDelete}" Value="True">
+                                    <Setter Property="Background" Value="Red"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                         <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
                         <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
                         <DataGridTextColumn Header="TypeUser" Binding="{Binding TypeUser}"/>
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                        <DataGridTextColumn Header="RegisteredDate" Binding="{Binding RegisteredDate}" Width="650"/>
-            </DataGrid.Columns>
+                        <DataGridTextColumn Header="RegisterDate" Binding="{Binding RegisterDate}"/>
+                        <DataGridTextColumn Header="ExpiryDate" Binding="{Binding ExpiryDate}"/>
+                        <DataGridTextColumn Header="IsDelete" Binding="{Binding IsDelete}" Width="150"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
 
-            <StackPanel Grid.Column="2" Grid.Row="2">
+            <Grid Grid.Column="2" Grid.Row="2" Margin="10" VerticalAlignment="Bottom">
 
-                <Button Content="Update Database" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"  Click="Update_Click" Margin="150,25,150,-55" >
+                <!--<Button Content="Update Database" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"  Click="Update_Click" Margin="150,25,150,-55" >
 
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.65">
@@ -127,17 +315,28 @@
                             <GradientStop Color="#FFA01794" Offset="0.5"/>
                         </LinearGradientBrush>
                     </Button.Background>
+                </Button>-->
+
+                <Label Content="Id konta:" Margin="15,0,15,0" Width="100" HorizontalAlignment="Left" Foreground="White" FontSize="14" FontWeight="Bold" FontStyle="Italic"/>
+
+                <TextBox x:Name="DelId" Margin="130,0,15,0" TextWrapping="Wrap" Width="35" Height="25" HorizontalAlignment="Left" Background="#FFD11414" Foreground="White" HorizontalContentAlignment="Center" MaxLength="3" VerticalContentAlignment="Center"/>
+
+                <Button Content="Usuń konto" Style="{StaticResource GelButton}" Margin="250,0,100,0" Height="25" FontSize="12" FontStyle="Italic" Click="Delete_Click" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                 </Button>
 
-            </StackPanel>
-            
-            <StackPanel Grid.Column="0" Grid.Row="2" >
-                <Border Background="#FF6A6D74" CornerRadius="10" Margin="10,25,10,-55" Opacity="0.65">
-                    <TextBlock x:Name="txtCaptcha" FontWeight="Bold" FontSize="16" FontStyle="Italic" Foreground="YellowGreen" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            </StackPanel>
+            </Grid>
 
-            
+            <Grid Grid.Row="2" Margin="25,10,10,39" Grid.Column="2">
+                <Label Content="Usuwanie konta:" Foreground="White" FontSize="16" FontWeight="Bold" FontStyle="Italic" VerticalAlignment="Top" ></Label>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="2" Margin="5,25,5,5" VerticalAlignment="Center">
+                <Border Background="#FF6A6D74" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="35" CornerRadius="10" Opacity="0.65">
+                    <TextBlock x:Name="txtCaptcha" FontWeight="Bold" FontSize="16" FontStyle="Italic" Foreground="YellowGreen" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+
+
         </Grid>
 
     </DockPanel>

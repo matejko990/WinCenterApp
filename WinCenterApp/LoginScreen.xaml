@@ -3,19 +3,106 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WinCenterApp"
+        xmlns:local="clr-namespace:mMangerCenter"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="430" Width="380" FontSize="14" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="images/icons8_Home.ico" Cursor="Hand" KeyDown="Window_KeyDown_1">
-    
+        Title="LoginScreen" x:Name="WindowLS" Height="430" Width="380" FontSize="14" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="images/icons8_Home.ico" Cursor="Hand" KeyDown="Window_KeyDown_1" Loaded="Window_Loaded">
+
     <!--<Window.TaskbarItemInfo >
         <TaskbarItemInfo />
     </Window.TaskbarItemInfo>-->
-    
+
+    <Window.Resources>
+
+        <Style TargetType="Button" x:Key="Button">
+            <Setter Property="Background" Value ="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootElement">
+                            <!-- drop shadow - needs to be blurred for correct effect -->
+                            <Rectangle Fill="{x:Null}" Margin="1,1,0,0" RadiusX="6" RadiusY="6">
+                                <Rectangle.BitmapEffect>
+                                    <BlurBitmapEffect Radius="3" />
+                                </Rectangle.BitmapEffect>
+                            </Rectangle>
+                            <Grid x:Name="mainButton"
+                                Margin="0,0,1,1"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="0.0" Y="0.0"/>
+                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Rectangle x:Name="mainRect" Fill="{TemplateBinding Background}" RadiusX="6" RadiusY="6">
+                                </Rectangle>
+
+                                <!-- transparent rect -->
+                                <Rectangle x:Name="glowRect" Margin="1,1,1,1" RadiusX="5" RadiusY="5">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="2,0">
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                             Margin="4,0,4,0"
+                             Content="{TemplateBinding Content}"
+                             VerticalAlignment="Center" />
+
+                            </Grid>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="0.0" Y="0.0"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                                <!--<Setter Property="Foreground" Value="Orange" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="mainButton" Property="RenderTransform" >
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <TranslateTransform X="1" Y="1"/>
+                                            <ScaleTransform ScaleX="1.03" ScaleY="1.03" />
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>-->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Orange"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
     <Grid Background="DimGray" RenderTransformOrigin="0.5,0.948">
 
         <Grid Background="Black" Margin="1">
 
-            <Grid Opacity="0.95">
+            <Grid Opacity="0.95" Loaded="Panel_Loaded">
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="Black" Offset="0.1" />
@@ -32,35 +119,39 @@
 
             <StackPanel Margin="20,20,20,10">
 
-                <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"/>
+                <Label Content="Panel logowania" Foreground="DeepSkyBlue" FontSize="25" HorizontalAlignment="Center"/>
 
                 <Separator></Separator>
 
-                <Label x:Name="Us" Content="Username (np. pi/tiXXXXX)" Foreground="White"/>
-                <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18" MaxLength="7"/>
+                <Label x:Name="Us" Content="Nazwa użytkownika: (np. piXXXXX)" Foreground="White"/>
+                <TextBox Name="txtUsername" Background="#545d6a" Foreground="White" FontSize="18" MaxLength="7" IsEnabled="False"/>
 
-                <Label x:Name="Ps" Content="Password" Foreground="White"/>
-                <PasswordBox Name="txtPassword" Background="#545d6a" Foreground="White" FontSize="18"/>
+                <Label x:Name="Ps" Content="Hasło:" Foreground="White"/>
+                <PasswordBox Name="txtPassword" Background="#545d6a" Foreground="White" FontSize="18" MaxLength="25"/>
 
-                <Label x:Name="TypU" Content="TypeUser" Foreground="White"/>
+                <Label x:Name="TypU" Content="Typ użytkownika:" Foreground="White"/>
                 <ComboBox x:Name="ChoiseTypeUser" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <ComboBoxItem Content="Admin" Background="#FFD6D0D0" FontStyle="Italic" FontSize="12" BorderBrush="#FF6A6A6A" />
+                    <ComboBoxItem Content="Administrator" Background="#FFD6D0D0" FontStyle="Italic" FontSize="12" BorderBrush="#FF6A6A6A" />
                     <!--<Separator Margin="-5"></Separator>-->
-                    <ComboBoxItem Content="User" Background="#FFD6D0D0" FontStyle="Italic" FontSize="12" BorderBrush="#FF6A6A6A" IsSelected="True" />
+                    <ComboBoxItem Content="Użytkownik" Background="#FFD6D0D0" FontStyle="Italic" FontSize="12" BorderBrush="#FF6A6A6A" IsSelected="True" />
                 </ComboBox>
 
                 <Grid Height="60">
-                    <Button Name="btnSubmit" Click="btnSubmit_Click" Content="LogIn" Margin="5,5,0,0" HorizontalAlignment="Left" 
+                    <Button Name="btnSubmit" Click="btnSubmit_Click" Content="Zaloguj" Margin="5,5,0,0" HorizontalAlignment="Left" 
                             Width="120" Height="30" Background="#545d6a" Foreground="White" FontSize="18"/>
-                    <Button Name="btnCancel" Click="btnCancel_Click" Content="Cancel" Margin="0,5,5,0" HorizontalAlignment="Right" 
+                    <Button Name="btnCancel" Click="btnCancel_Click" Content="Wyjdź" Margin="0,5,5,0" HorizontalAlignment="Right" 
                             Width="120" Height="30" Background="#545d6a" Foreground="White" FontSize="18"/>
                 </Grid>
 
-                <Label x:Name="LReg" Content="* Log in as 'Admin' if you want to: &#xA;- register a new account, &#xA;- make a change/recover password, etc." Foreground="DeepSkyBlue" Height="70" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="Hand" FontStyle="Italic" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="12" IsEnabled="False"/>
+                <Label x:Name="LReg" Content="* Zaloguj się jako 'Administrator' jeśli chcesz, np.: &#xA;- zarejestrować nowe konto ('alior rrb'), &#xA;- zmienić parametry ustawień, modułów, etc." Foreground="DeepSkyBlue" Height="70" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="Hand" FontStyle="Italic" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="12" IsEnabled="False"/>
 
             </StackPanel>
 
         </Border>
+
+        <Button x:Name="MainAdmin" Margin="298,320,31,26" Style="{StaticResource Button}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="45" Height="55" >
+            <Image Source="images/pencil-writing-on-a-paper.png" Opacity = "0.8" Stretch="Fill" Height="25" Width="25"></Image>
+        </Button>
 
         <!--<Grid>
             <StatusBar Name="sbar" Margin="0,0,0,15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Gray" >
@@ -71,7 +162,8 @@
             <ProgressBar Name="ProgressBar1" IsIndeterminate="False" Width="280" Height="20" Margin="0,0,0,0" HorizontalAlignment="Center" Background="LightGray"/>
             <Label x:Name="procento" FontSize="10" Foreground="Black"  HorizontalAlignment="Center" Width="35" Margin="100,-1,95,0"/>
         </Grid>
-        --><!--<ProgressBar.Triggers>
+        -->
+        <!--<ProgressBar.Triggers>
                 <EventTrigger RoutedEvent="ProgressBar.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
@@ -86,6 +178,7 @@
                 </EventTrigger>
             </ProgressBar.Triggers>-->
         <!--</ProgressBar>-->
+
     </Grid>
 
 </Window>

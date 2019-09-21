@@ -109,6 +109,9 @@ Namespace My
 End Namespace
 Partial Class Application
     Inherits Global.System.Windows.Application
+
+    Public Shared Property PrevInstance As Boolean
+
     <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")> _
     <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1822:MarkMembersAsStatic")> _
     Friend ReadOnly Property Info() As Global.Microsoft.VisualBasic.ApplicationServices.AssemblyInfo

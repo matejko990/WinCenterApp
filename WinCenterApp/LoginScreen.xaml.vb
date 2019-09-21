@@ -1,35 +1,231 @@
 ﻿Imports System
 Imports System.Data
 Imports System.Data.SqlClient
-Imports System.Windows.Threading
+'Imports System.Windows.Threading
 Imports System.ComponentModel
+Imports System.Text.RegularExpressions
 
 Public Class LoginScreen
+
     Dim WithEvents BackgroundWorker1 As BackgroundWorker
-    Public Shared TxtString As String
-    Public Shared username As String
+
+    Public Shared TypeUserName As String
+
+    Public Shared TxtString_msgcheck As String
+    Public Shared MsgCheck = New MsgCheck()
+    Public Shared TxtString_msgcritical As String
+    Public Shared MsgCritical = New MsgCritical()
+    Public Shared TxtString_msginformation As String
+    Public Shared MsgInformation = New MsgInformation()
+
+    Public UserNameLog As String = Environment.UserName
 
     Dim conn As SqlConnection 'Dim connection As New SqlClient.SqlConnection
     Dim cmd As SqlCommand     'Dim command As New SqlClient.SqlCommand
-    'Dim adapter As New SqlClient.SqlDataAdapter
-    'Dim dataset As New DataSet
     Dim dr As SqlDataReader
     Dim X As Integer = 0
-    Dim MainWindow = New MainWindow()
-    Dim MsgCritical = New MsgCritical() 'create construktor
-    Dim MsgCheck = New MsgCheck()
+    'Dim MainWindow As New MainWindow()
+    'Dim MainAdmin_0 = New MainAdmin()
     Dim ProgresBarAnimation = New ProgresBarAnimation()
     Dim inprocent As Integer = 1
-    Dim AdminWin = New AdminWin()
-    'Dim TypeUser As String
-    'Dim Type As String
+    'Dim AdminWin = New AdminWin()
 
-    'Public UserInput As String
-    'Dim DispatcherTimer_Tick = New DispatcherTimer_Tick()
-    'Dim ProgresBarAnimation = New ProgresBarAnimation()
+    Dim regDate As DateTime = DateTime.Now
+    'Dim regexpDate As DateTime = DateTime.Now.AddDays(1)
+    Dim curDate As Date = Date.Now.ToString("yyyy-MM-dd")
+    Public strDate As String = regDate.ToString("yyyy-MM-dd") 'HH:mm:ss")
+    Public Shared expDate As String '= regexpDate.ToString("yyyy-MM-dd HH:mm:ss")
+    Dim flags As Boolean = False
+
+    Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
+
+        'MainWindow.Hide()
+
+        'WindowLS.IsEnabled = True
+        'WindowLS.WindowStyle = WindowStyle.ThreeDBorderWindow  
+
+        'Call ForceSingleInstanceApplication()
+
+        'Dim SignUp = New SignUp()
+
+        'Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
+        'location = New Uri(location).LocalPath & "\"
+
+        'Dim files As New List(Of String)
+        'files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
+        '           Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
+
+        'Dim value As String = String.Join("", files) & ".mdf"
+
+        'Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        'Dim con As New SqlConnection(str)
+        'Dim table As New DataTable("Table")
+        'Dim username As DataRow = table.NewRow
+
+        'Dim com As String = "Select Id, Username, TypeUser from [User]"
+
+        'Dim Adpt As New SqlDataAdapter(com, con)
+
+        'Dim ds As DataSet = New DataSet()
+
+        'Adpt.Fill(ds, "User")
+
+        'Dim TableCount As Integer = ds.Tables(0).Rows.Count
+        'Dim InfoCompareValues_2 As Boolean = CompareValues_2()
+        'Dim InfoCompareValues_1 As Boolean = CompareValues_1()
+
+        'con.Close()
+
+        'If TableCount < 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = False Then ' ok
+
+        '    TypeUserName = "Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    MsgBox("Dodaj przynajmniej jednego administratora i użytkownika!")
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount < 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = True Then 'ok
+
+
+        '    TypeUserName = "Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount < 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = False Then
+
+        '    TypeUserName = "Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount >= 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = False Then
+
+        '    TypeUserName ="Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    MsgBox("Dodaj przynajmniej jednego administratora i użytkownika!")
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount >= 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = True Then'ok
+
+        '    TypeUserName = "Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount >= 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = False Then
+
+        '    TypeUserName = "Administrator"
+
+        '    txtPassword.IsEnabled = False
+
+        '    con.Close()
+
+        '    SignUp.Show()
+        '    Me.Hide()
+
+        'ElseIf TableCount >= 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = True Then 'ok
+
+        '    txtPassword.IsEnabled = True
+
+        'End If
+
+    End Sub
+
+    'Public Sub ForceSingleInstanceApplication()
+    '    'Get a reference to the current process
+    '    Dim MyProc As Process = Process.GetCurrentProcess
+
+    '    'Check how many processes have the same name as the current process
+    '    If (Process.GetProcessesByName(MyProc.ProcessName).Length > 1) Then
+    '        'If there is more than one, it is already running
+    '        MsgBox("Application is already running", MsgBoxStyle.Critical, My.Application.Info.Title) 'Reflection.Assembly.GetCallingAssembly().GetName().Name)
+    '        ' Terminate this process and give the operating system the specified exit code.
+    '        Environment.Exit(-2)
+    '        Exit Sub
+    '    End If
+    'End Sub
+
+    'Public Function CompareValues_1()
+
+    '    Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
+    '    location = New Uri(location).LocalPath & "\"
+
+    '    Dim files As New List(Of String)
+    '    files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
+    '               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
+
+    '    Dim value As String = String.Join("", files) & ".mdf"
+
+    '    Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+    '    Dim con As New SqlConnection(str)
+    '    con.Open()
+
+    '    Dim sSql As String = "Select Username, TypeUser From [User] Where Username = @Username And TypeUser = @TypeUser and IsDelete=@IsDelete"
+
+    '    Using Command As New SqlCommand(sSql, con)
+    '        Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = UserNameLog
+    '        Command.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = "Uzytkownik"
+    '        Command.Parameters.Add("@IsDelete", SqlDbType.Bit).Value = False
+    '        Dim Reader As SqlDataReader = Command.ExecuteReader()
+    '        Return Reader.HasRows()
+
+    '    End Using
+
+    'End Function
+
+    'Public Function CompareValues_2()
+
+    '    Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
+    '    location = New Uri(location).LocalPath & "\"
+
+    '    Dim files As New List(Of String)
+    '    files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
+    '               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
+
+    '    Dim value As String = String.Join("", files) & ".mdf"
+
+    '    Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+    '    Dim con As New SqlConnection(str)
+    '    con.Open()
+
+    '    Dim sSql As String = "Select Username, TypeUser From [User] Where Username = @Username And TypeUser = @TypeUser and IsDelete=@IsDelete"
+
+    '    Using Command As New SqlCommand(sSql, con)
+    '        Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = UserNameLog
+    '        Command.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = "Administrator"
+    '        Command.Parameters.Add("@IsDelete", SqlDbType.Bit).Value = False
+    '        Dim Reader As SqlDataReader = Command.ExecuteReader()
+    '        Return Reader.HasRows()
+
+    '    End Using
+
+    'End Function
 
     Sub Connectdb()
-
 
         Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
         location = New Uri(location).LocalPath & "\"
@@ -52,83 +248,26 @@ Public Class LoginScreen
 
         Call Connectdb()
 
-        'TypeUser = ChoiseTypeUser.Text
-
-        'If TypeUser = "Admin" Then
-        '    Type = "Admin"
-        'ElseIf TypeUser = "User" Then
-        '    Type = "User"
-        'End If
-
-        cmd = New SqlCommand("SELECT * FROM [User] WHERE Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND Password COLLATE Latin1_General_CS_AS =CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & txtPassword.Password & "'),2) AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
-        'command.CommandText = "SELECT COUNT (*) FROM [User] WHERE Username= '" & txtUsername.Text & "'AND Password='" & txtPassword.Password & "';"
-        'connection.Open()
+        cmd = New SqlCommand("SELECT * FROM [User] WHERE Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND Password COLLATE Latin1_General_CS_AS =CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & txtPassword.Password & "'),2) AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'AND IsDelete = '" & flags & "'", conn)
 
         dr = cmd.ExecuteReader
         dr.Read()
 
-        'command.Connection = connection
-
-        'adapter.SelectCommand = command
-
-        'adapter.Fill(dataset, "0")
-
-        'Dim count = dataset.Tables(0).Rows.Count
-
         If dr.HasRows Then 'If count > 0 Then
 
-            'Me.BackgroundWorker1 = New BackgroundWorker
-            ''Enable progress reporting
-            'BackgroundWorker1.WorkerReportsProgress = True
-            ''Set the progress state as "normal"
-            'TaskbarItemInfo.ProgressState = Shell.TaskbarItemProgressState.Normal
-            ''Start the work 
-            'BackgroundWorker1.RunWorkerAsync()
-            ''DoWork Event occurs
-            ''Now control will goes to worker_DoWork Sub because it handles the DoWork Event
-
-            'If dr.Item("Password") = "" Then '<> txtPassword.Password Then
-
-            '    MsgBox("Incorrect login please check Username Or Password!", MsgBoxStyle.Critical, "Error")
-
-            'Exit Sub
-
-            'Else
-
-            'If MsgCheck Is Nothing Then
             Ps.Foreground = Brushes.Green
             Us.Foreground = Brushes.Green
 
-            'Dim dt As DispatcherTimer = New DispatcherTimer()
-            'AddHandler dt.Tick, AddressOf DispatcherTimer_Tick
-            'dt.Interval = New TimeSpan(0, 0, 0, 0, 5)
-            'dt.Start()
+            If ChoiseTypeUser.Text = "Użytkownik" Then
 
-            'Call DispatcherTimer_Tick()
+                TypeUserName = "Uzytkownik"
 
-            'Dim progbar As New ProgressBar()
-
-            'progbar.Background = Brushes.Gray
-
-            'progbar.Foreground = Brushes.Green
-
-            'progbar.Width = 150
-
-            'progbar.Height = 15
-
-            'Dim duration As New Duration(TimeSpan.FromMilliseconds(2000))
-
-            'Dim doubleanimation As New Animation.DoubleAnimation(100.0, duration)
-
-            'doubleanimation.RepeatBehavior = New Animation.RepeatBehavior(1)
-
-            'progbar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation)
-
-            'sbar.Items.Add(progbar)
-            'System.Threading.Thread.Sleep(New TimeSpan(0, 0, 3))
-            If ChoiseTypeUser.Text = "User" Then
+                conn.Close()
                 'Call Load()
-                Me.Hide()
+                'Me.Hide()
+                'WindowLS.IsEnabled = False
+                'WindowLS.WindowStyle = WindowStyle.None
+
                 ProgresBarAnimation.Show()
                 Call Load()
                 'MsgCheck.Show()
@@ -136,137 +275,101 @@ Public Class LoginScreen
 
             Else
 
+                TypeUserName = "Administrator"
+
+                conn.Close()
+
+                WindowLS.IsEnabled = False
+
                 Me.Hide()
                 ProgresBarAnimation.Show()
                 Call Load()
                 'MsgCheck.Show()
-                AdminWin.Show()
 
-            End If
+                Call Connectdb()
 
-            'Do While ProgressBar1.Value < 100
-            '    While ProgressBar1.Value < 100
-            '        ProgressBar1.Value += 1    ' Add 1 to the current value
-            '    End While
-            '    If ProgressBar1.Value = 100 Then
+                cmd = New SqlCommand("Select * from [User] Where Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
+                dr = cmd.ExecuteReader
 
-            'Me.Close() 
+                dr.Read()
 
-            'ProgresBarAnimation.Show()
-            'MsgCheck.Show() 'MsgBox("You are Now Logged In", MsgBoxStyle.Information, "Login")
+                expDate = dr.GetValue(6)
 
-            'Threading.Thread.Sleep(2000)
+                conn.Close()
 
-            'Call Main()
-            'Me.Hide()
-            '        End If
-            '        'End If
-            '    Loop
-            'Else
+                If strDate >= expDate Then
 
-            'Char.IsLetter(txtUsername.Text) 'tylko litery
-            'If Char.IsLetter(txtUsername.Text) = False Then
-            '    txtUsername.Clear()
-            '    txtUsername.Focus()
-            'End If
-        Else
+                    Dim ChangePasswordByUser = New ChangePasswordByUser
 
-                If txtUsername.Text = "" And txtPassword.Password = "" Then
-
-                TxtString = "Pole 'Username' oraz 'Password' jest puste!" & vbNewLine & "Wprowadź nazwę użykownika oraz hasło!"
-
-                Us.Foreground = Brushes.Red
-                Ps.Foreground = Brushes.Red
-
-                MsgCritical.Show()
-                txtUsername.Focus()
-
-                Exit Sub
-
-            Else
-
-                If txtUsername.Text = "" Then
-
-                    TxtString = "Pole 'Username' jest puste!" & vbNewLine & "Wprowadź nazwę użykownika!"
-
-                    Us.Foreground = Brushes.Red
-                    Ps.Foreground = Brushes.White
-
-                    MsgCritical.Show()
-                    'txtPassword.Clear()
-                    txtUsername.Focus()
-
-
-                    Exit Sub
+                    ChangePasswordByUser.Show()
 
                 Else
+                    Dim AdminWin = New AdminWin()
 
-                    'Funkcja regex walidacja znaków pola Username pod kątem: małe litery - 2 szt. oraz cyfry - 5 szt.
-                    If System.Text.RegularExpressions.Regex.IsMatch(txtUsername.Text, "([a-z]{2}[\d]{5})") Then
-
-                        txtUsername.IsEnabled = False 'zablokowanie pola Username - poprawna walidacja loginu!
-
-                        If txtPassword.Password = "" Then
-
-                            TxtString = "Pole 'Password' jest puste!" & vbNewLine & "Wprowadź hasło!"
-
-                            Ps.Foreground = Brushes.Red
-                            Us.Foreground = Brushes.White
-
-                            MsgCritical.Show()
-                            'txtUsername.Clear()
-                            txtPassword.Focus()
-
-                            Exit Sub
-
-                        Else
-
-                            TxtString = "Nieprawidłowy login lub hasło!" & vbNewLine & "Wprowadź poprawne dane logowania!"
-
-                            Us.Foreground = Brushes.Red
-                            Ps.Foreground = Brushes.Red
-
-                            MsgCritical.Show() 'MsgBox("Incorrect login please check Username Or Password!", MsgBoxStyle.Critical, "Error")
-                            txtUsername.Clear()
-                            txtPassword.Clear()
-                            txtUsername.IsEnabled = True 'odblokowanie pola Username - niepoprawne walidacja loginu i hasła - kolejna z 3 prób!
-
-                        End If
-
-                    Else
-
-                        TxtString = "Nieprawidłowy login!" & vbNewLine & "Wprowadź login w formacie: piXXXXX!"
-
-                        Us.Foreground = Brushes.Yellow
-                        Ps.Foreground = Brushes.White
-
-                        MsgCritical.Show()
-                        txtUsername.Clear()
-                        txtPassword.Clear()
-                        txtUsername.Focus()
-
-                    End If
+                    AdminWin.Show()
 
                 End If
 
             End If
 
-            'warunek 3 prób logowania i zakończenie programu
-            X = X + 1
-            If X >= 3 Then
+        Else
 
-                'timeout 1s  
-                Threading.Thread.Sleep(1000)
 
-                'nadanie zmiennej globalnej wartości string
-                TxtString = "Przekroczona liczba błędnych logowań - aplikacja zostanie zamknięta!"
+            If txtPassword.Password = "" Then
 
-                MsgCritical.Show() 'MsgBox("Przekroczona liczba błędnych logowań - aplikacja zostanie zamknięta!", MsgBoxStyle.Critical, "Error")
+                TxtString_msginformation = "Pole 'hasła:' jest puste!" & vbNewLine & "Wprowadź hasło!"
 
-                'zakończenie działania programu
-                End
+                Ps.Foreground = Brushes.Red
+                Us.Foreground = Brushes.White
+
+                MsgInformation.Show()
+
+                TxtString_msginformation = Nothing
+                'txtUsername.Clear()
+                txtPassword.Focus()
+                conn.Close()
+
+                Exit Sub
+
+            Else
+
+                TxtString_msginformation = "Nieprawidłowe hasło!" & vbNewLine & "Wprowadź ponownie poprawne hasło logowania!"
+
+                Ps.Foreground = Brushes.Red
+
+                MsgInformation.Show() 'MsgBox("Incorrect login please check Username Or Password!", MsgBoxStyle.Critical, "Error")
+
+                TxtString_msginformation = Nothing
+                txtPassword.Clear()
+                conn.Close()
+
+                CountLog()
 
             End If
+
+        End If
+
+    End Sub
+
+    Sub CountLog()
+
+        'warunek 3 prób logowania i zakończenie programu
+        X = X + 1
+        If X >= 3 Then
+
+            'nadanie zmiennej globalnej wartości string
+            TxtString_msgcritical = "Przekroczona liczba błędnych logowań - aplikacja zostanie zamknięta!"
+
+            'timeout 1s  
+            Threading.Thread.Sleep(1000)
+
+            MsgCritical.Show() 'MsgBox("Przekroczona liczba błędnych logowań - aplikacja zostanie zamknięta!", MsgBoxStyle.Critical, "Error")
+
+            'Clean variable
+            TxtString_msgcritical = Nothing
+
+            'zakończenie działania programu
+            End
 
         End If
 
@@ -275,16 +378,49 @@ Public Class LoginScreen
 
     End Sub
 
-    Sub Main() 'wyświetla główne okna obsługi i ukrywa ekran logowania
+    Sub Main() 'wyświetla główne okna obsługi i ukrywa ekran logowania 
 
-        Me.Hide()
-        MainWindow.Show()
+        Call Connectdb()
 
-        username = txtUsername.Text
+        cmd = New SqlCommand("Select * from [User] Where Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
+        dr = cmd.ExecuteReader
+
+        dr.Read()
+
+        expDate = dr.GetValue(6)
+
+        conn.Close()
+
+        If strDate >= expDate Then
+
+            Dim ChangePasswordByUser = New ChangePasswordByUser
+            Dim MainWindow As New MainWindow()
+
+            'ChangePasswordByUser.Show()
+
+            'Window.IsEnabled = False
+
+            Me.Close()
+            MainWindow.Show()
+
+        Else
+            Dim MainWindow As New MainWindow()
+            Me.Close()
+            MainWindow.Show()
+
+        End If
 
     End Sub
 
     Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click 'obsługa button'a
+
+        If conn Is Nothing Then
+
+        Else
+
+            conn.Close()
+
+        End If
 
         End
 
@@ -320,154 +456,58 @@ Public Class LoginScreen
     End Sub
 
     Private Sub TxtUsername_GotFocus(sender As Object, e As RoutedEventArgs) Handles txtUsername.GotFocus 'to co się dzieje runtime
+
         'txtUsername.IsEnabled = False 'wyłączenie pola tekstowego
         txtUsername.Foreground = Brushes.WhiteSmoke 'kolor tekstu pisanego
         txtPassword.Foreground = Brushes.WhiteSmoke 'kolor tekstu pisanego
 
     End Sub
 
-    'Private Sub BtnSubmit_Click(ByVal sender As System.Object, ByVal e As System.Windows.RoutedEventArgs)
-
-    '    'ProgressBar1.Items.Clear()
-
-    '    'Dim lbl As New Label()
-
-    '    'lbl.Background = New LinearGradientBrush(Colors.Pink, Colors.Red, 90)
-
-    '    'lbl.Content = "Progress"
-
-    '    'sbar.Items.Add(lbl)
-
-    '    Dim progbar As New ProgressBar()
-
-    '    progbar.Background = Brushes.Gray
-
-    '    progbar.Foreground = Brushes.Green
-
-    '    progbar.Width = 150
-
-    '    progbar.Height = 15
-
-    '    Dim duration As New Duration(TimeSpan.FromMilliseconds(2000))
-
-    '    Dim doubleanimation As New Animation.DoubleAnimation(100.0, duration)
-
-    '    doubleanimation.RepeatBehavior = New Animation.RepeatBehavior(1)
-
-    '    progbar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation)
-
-    '    sbar.Items.Add(progbar)
-
-    'End Sub
-
     Sub Load()
+
         Cursor = Cursors.Wait
 
         System.Threading.Thread.Sleep(New TimeSpan(0, 0, 0, 0, 500))
 
         Cursor = Cursors.Arrow
+
     End Sub
 
-    'Private Sub LReg_Click(sender As Object, e As RoutedEventArgs) Handles LReg.Click
-    '    Dim AdminWin = New AdminWin()
-    '    AdminWin.Show()
-    'End Sub
+    Private Sub TxtUsername_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles txtUsername.MouseDoubleClick
 
-    'Public Sub DispatcherTimer_Tick()
-    '    Dim DelayTime As TimeSpan
-    '    ProgressBar1.Value = inprocent
-    '    procento.Content = "Postęp..." & inprocent & "%"
-    '    inprocent = inprocent + 1
-    '    Dim NewTime As DateTime = DateTime.Now.AddSeconds(2)
-    '    Do While inprocent <> 100
-    '        DelayTime = NewTime.Subtract(DateTime.Now)
-    '        Threading.Thread.Sleep(50) ' simulate work
-    '        If ProgressBar1 IsNot Nothing Then
-    '            ProgressBar1.Value = 100
-    '        End If
-    '        inprocent += 1
+        txtUsername.Clear()
 
+    End Sub
 
-    '        Delay(1)
-    '        Dim duration As New Duration(TimeSpan.FromSeconds(10))
-    '        Dim doubleanimation As New Animation.DoubleAnimation(100.0, duration)
-    '        ProgressBar1.BeginAnimation(ProgressBar.ValueProperty, doubleanimation)
-    '    Loop
+    Private Sub TxtPassword_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles txtPassword.MouseDoubleClick
 
-    '    If inprocent >= 100 Then
+        txtPassword.Clear()
 
-    '        inprocent = 100
+    End Sub
 
-    '        ProgressBar1.Value = 100
-    '        procento.Content = "Postęp..." & ProgressBar1.Value & "%"
+    'Private Sub txtUsername_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtUsername.TextChanged
 
-    '        Return True
+    '    Dim digitsOnly As Regex = New Regex("([^\S])|([^pi\d]*$)|(^[\d]*$)|(^[^pi\D]*$)|(^i+)|([pi]{3})|(pp)|(^pi\d*\D)")
+    '    txtUsername.Text = digitsOnly.Replace(txtUsername.Text, "")
 
-    '    End If
-
-    '    Return True
+    '    digitsOnly = Nothing
 
     'End Sub
 
-    'Private Sub worker_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-    '    For i As Integer = 0 To 99 'Step 10
-    '        System.Threading.Thread.Sleep(5)
-    '        'Raises the ProgressChanged event passing the value
-    '        CType(sender, System.ComponentModel.BackgroundWorker).ReportProgress(i)
-    '        'Now control will goes to worker_ProgressChanged Sub because it handles the ProgressChanged Event
-    '    Next i
-    'End Sub
+    Private Sub Panel_Loaded(sender As Object, e As RoutedEventArgs)
 
-    'Private Sub worker_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-    '    'Increment the value on progress bars in window
-    '    ProgressBar1.Value = e.ProgressPercentage
-    '    'Increment the value on progress bars in Taskbar
-    '    procento.Content = inprocent & "%"
-    '    inprocent = inprocent + 1
-    '    TaskbarItemInfo.ProgressValue = CDbl(e.ProgressPercentage) / 100
-    'End Sub
+        txtUsername.Text = UserNameLog
 
-    '' Work completed
-    'Private Sub worker_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-    '    ProgressBar1.Value = 100
-    '    TaskbarItemInfo.ProgressValue = 1.0
-    '    'Set the progress state as "indeterminate"
-    '    TaskbarItemInfo.ProgressState = Shell.TaskbarItemProgressState.Indeterminate
-    '    'display a message box and keep the result in variable result
-    '    'Dim result = MessageBox.Show("The progress completed. Would you like to exit now?", "Message - Progress Completed", MessageBoxButton.YesNo)
-    '    ''if result is Yes - Close the application
-    '    'If result = MessageBoxResult.Yes Then End
-    '    Call Load()
-    '    MsgCheck.Show()
-    '    Call Main()
+    End Sub
 
-    'End Sub
+    Private Sub MainAdmin_Click(sender As Object, e As RoutedEventArgs) Handles MainAdmin.Click
 
-    ' This function removes invalid filename characters from a user input string.
+        Me.Close()
+        Dim MainAdmin_0 = New MainAdmin()
 
-    'Private Function RemoveInvalidFileNameChars(UserInput As String) As String
+        MainAdmin_0.Show
 
-    '    For Each invalidChar In IO.Path.GetInvalidFileNameChars
-    '        UserInput = UserInput.Replace(invalidChar, "")
-    '    Next
-    '    Return UserInput
-    'End Function
+    End Sub
 
-    'Function IsValidFileNameOrPath(ByVal name As String) As Boolean
-    '    ' Determines if the name is Nothing.
-    '    If name Is Nothing Then
-    '        Return False
-    '    End If
-
-    '    ' Determines if there are bad characters in the name.
-    '    For Each badChar As Char In System.IO.Path.GetInvalidPathChars
-    '        If InStr(name, badChar) > 0 Then
-    '            Return False
-    '        End If
-    '    Next
-
-    '    ' The name passes basic validation.
-    '    Return True
-    'End Function
 
 End Class

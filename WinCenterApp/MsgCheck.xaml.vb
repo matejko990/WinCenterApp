@@ -45,7 +45,21 @@ Partial Public Class MsgCheck
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
 
+        Dim objchckCPBU As New ChangePasswordByUser
+        Dim objchckSU As New SignUp
+
         'ładowanie elementów startu
+#Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
+        If objchckCPBU.TxtString_msgcheck = "" Then
+
+            txt.Text = objchckSU.TxtString_msgcheck
+
+        ElseIf objchckSU.TxtString_msgcheck = "" Then
+
+            txt.Text = objchckCPBU.TxtString_msgcheck
+
+        End If
+#Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
     End Sub
 End Class

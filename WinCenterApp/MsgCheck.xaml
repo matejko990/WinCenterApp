@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WinCenterApp"
+        xmlns:local="clr-namespace:mMangerCenter"
         mc:Ignorable="d"
-        Title="MsgCheck" Height="150" Width="450" Foreground="White" Background="DimGray" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="images/icons8_Home.ico" WindowStyle="None" Opacity="0.85" Cursor="Hand" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+        Title="MsgCheck" Height="150" Width="500" Foreground="White" Background="DimGray" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="images/icons8_Home.ico" WindowStyle="None" Opacity="0.85" Cursor="Hand" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
 
     <Window.Resources>
 
@@ -179,12 +179,11 @@
 
                     <Grid Height="65">
 
-                        <TextBlock FontSize="16" TextWrapping="WrapWithOverflow" FontFamily="Segoe UI Emoji">
-                         Logowanie zakończone sukcesem! 
-                        </TextBlock>
+                        <TextBox Name="txt" FontSize="16" TextWrapping="WrapWithOverflow" FontFamily="Segoe UI Emoji" Margin="0,0,45,-20" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Background="{x:Null}" Foreground="White" SelectionBrush="White" BorderBrush="{x:Null}">
+                        </TextBox>
 
                     </Grid>
-                    <Button x:Name="Okey" Content="Ok" Margin="0,-8,0,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" Foreground="White" Width="35" Height="25" Style="{StaticResource NewGameButtonStyle}" Background="{x:Null}" BorderBrush="{x:Null}" Opacity="0.95" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold"/>
+                    <Button x:Name="Okey" Content="Ok" Margin="0,-8,3,0" HorizontalAlignment="Right" VerticalAlignment="Stretch" Foreground="White" Width="35" Height="25" Style="{StaticResource NewGameButtonStyle}" Background="{x:Null}" BorderBrush="{x:Null}" Opacity="0.95" FontFamily="Segoe UI Emoji" FontSize="16" FontWeight="Bold" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Panel.ZIndex="1000000"/>
 
                 </StackPanel>
 

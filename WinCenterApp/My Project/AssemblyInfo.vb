@@ -11,10 +11,10 @@ Imports System.Windows
 
 ' Sprawdź wartości atrybutów zestawu
 
-<Assembly: AssemblyTitle("WinCenterApp")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("WinCenterApp")>
+<Assembly: AssemblyTitle("mMangerCenter")>
+<Assembly: AssemblyDescription("Aplikacja do zarządzania modułami - ZOK")>
+<Assembly: AssemblyCompany("Alior Bank S.A.")>
+<Assembly: AssemblyProduct("mMangerCenter")>
 <Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>
@@ -57,3 +57,4 @@ Imports System.Windows
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: NeutralResourcesLanguage("pl-PL")>

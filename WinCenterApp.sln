@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 15 for Windows Desktop
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WinCenterApp", "WinCenterApp\WinCenterApp.vbproj", "{12AB7281-69B8-4379-BE2E-ABDC76D536BA}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mMenagerCenter", "WinCenterApp\mMenagerCenter.vbproj", "{12AB7281-69B8-4379-BE2E-ABDC76D536BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
