@@ -12,13 +12,15 @@
         End Function
 
         Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
-            'txt.Text = "tutorialspont.com"
+        'txt.Text = "tutorialspont.com"
 
-            Dim objcrcLS As New LoginScreen
-            Dim objcrcSU As New SignUp
-            Dim objcrcMA As New MainAdmin
-            Dim objcrcCPBU As New ChangePasswordByUser
-            Dim objcrcAW As New AdminWin
+        Dim objcrcLS As New LoginScreen
+        Dim objcrcSU As New SignUp
+        Dim objcrcMA As New MainAdmin
+        Dim objcrcCPBU As New ChangePasswordByUser
+        Dim objcrcAW As New AdminWin
+        Dim objcrcMW As New MainWindow
+
 
 #Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
         If objcrcMA.TxtString_msginformation <> "" Then
@@ -49,9 +51,15 @@
 
             txt.Text = objcrcAW.TxtString_msginformation
 
-                Exit Sub
+            Exit Sub
 
-            End If
+        ElseIf objcrcMW.TxtString_msginformation <> "" Then
+
+            txt.Text = objcrcMW.TxtString_msginformation
+
+            Exit Sub
+
+        End If
 #Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
     End Sub

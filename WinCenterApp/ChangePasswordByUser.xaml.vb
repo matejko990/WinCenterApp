@@ -9,9 +9,18 @@ Public Class ChangePasswordByUser
     Dim ObjTypeUserFromLS As New LoginScreen
     Dim ObjWinMW As New MainWindow
     Dim ObjWinADM As New AdminWin
-    Dim ObjCurDateMW As New LoginScreen
-    Dim ObjExpDateMW As New LoginScreen
+    Dim ObjCurDate As New LoginScreen
+    Dim ObjExpDate As New LoginScreen
+    Dim ObjFDate As New LoginScreen
+    Public ObjLSWindow As New LoginScreen
     Dim exp As Boolean = False
+
+    ' Variables
+#Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
+    Dim CurDateMW As String = ObjCurDate.curDate
+    Dim ExpDateMw As String = ObjExpDate.expDate
+    Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
+#Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
     ' Variables cooperating with other windows
     Public Shared MsgCheck As New MsgCheck()
@@ -24,14 +33,6 @@ Public Class ChangePasswordByUser
     Public Shared TxtString_msginformation As String
 
     Private Sub Password_Loaded(sender As Object, e As RoutedEventArgs) Handles Password.Loaded
-
-        ' Variables
-        Dim CurDateMW As String = ObjCurDateMW.strDate
-
-#Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
-        Dim ExpDateMw As String = ObjExpDateMW.expDate
-        Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
-#Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
         ' Label content - UserName
         LabelUser.Content = Environment.UserName
@@ -47,12 +48,11 @@ Public Class ChangePasswordByUser
 
             ChngPass.Content = "Twoje hasło wygasło i musi zostać zmienione! " & "(" & TypeUser & ")"
 
-
-
         Else
 
             ChngPass.Content = "Zmiana hasła! Wprowadź nowe hasło... " & "(" & TypeUser & ")"
             exp = True
+
         End If
 
     End Sub
@@ -107,18 +107,19 @@ Public Class ChangePasswordByUser
 
         ' New sqlconntection with database
         con = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
-        Dim query As String = "UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('SHA2_512', '" & RetypePassword_pass.Password & "'),2) WHERE Username = @Username And TypeUser = @TypeUser"
+        Dim query As String = "UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('SHA2_512', @Password),2), ExpiryDate = @FutureDate WHERE Username = @Username And TypeUser = @TypeUser"
 
         ' Open conntection with database
         con.Open()
 
         ' Check database and save as changed
         cmd = New SqlCommand(query, con)
-        cmd.Parameters.AddWithValue("@Username", LabelUser.Content)
 #Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
-        cmd.Parameters.AddWithValue("@TypeUser", ObjTypeUserFromLS.TypeUserName)
+        cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = LabelUser.Content
+        cmd.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = ObjTypeUserFromLS.TypeUserName
+        cmd.Parameters.Add("@FutureDate", SqlDbType.VarChar).Value = ObjFDate.FDate
+        cmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = RetypePassword_pass.Password
 #Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
-        cmd.Parameters.AddWithValue(RetypePassword_pass.Password, RetypePassword_pass.Password)
 
         If OldPassword.Password = "" Then
 
@@ -158,19 +159,36 @@ Public Class ChangePasswordByUser
         Quit.IsEnabled = True
 
 #Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
-        'Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
-#Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżon
+        Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
+#Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
-        ' Show Admin or User panel
-        'If TypeUser = "Administrator" Then
+        If ChngPass.Content = "Zmiana hasła! Wprowadź nowe hasło... " & "(" & TypeUser & ")" Then
 
-        '    ObjWinADM.Show()
+            ' Nothing
 
-        'ElseIf TypeUser = "Uzytkownik" Then
+        Else
 
-        '    ObjWinMW.Show()
+            ' Show Admin or User panel
+            If TypeUser = "Administrator" Then
 
-        'End If
+                My.Application.Windows(3).Close()
+
+                'ObjLSWindow.WindowLS.Close()
+                ObjWinADM.Show()
+
+            ElseIf TypeUser = "Uzytkownik" Then
+
+                'For count As Integer = My.Application.Windows.Count - 1 To 1 Step -1
+
+                My.Application.Windows(3).Close()
+
+                'Next
+
+                ObjWinMW.Show()
+
+            End If
+
+        End If
 
         ' Close connetion with database
         con.Close()
@@ -547,10 +565,10 @@ Public Class ChangePasswordByUser
     Private Sub ChngPassWin_Loaded(sender As Object, e As RoutedEventArgs) Handles ChngPassWin.Loaded
 
         ' Variable - cooperate with other window
-        Dim CurDateMW As String = ObjCurDateMW.strDate
+        Dim CurDateMW As String = ObjCurDate.curDate
 
 #Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
-        Dim ExpDateMw As String = ObjExpDateMW.expDate
+        Dim ExpDateMw As String = ObjExpDate.expDate
 #Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
         ' Compare to date from database

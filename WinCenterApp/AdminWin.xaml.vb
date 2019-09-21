@@ -11,7 +11,6 @@ Public Class AdminWin
     Public Shared MsgCritical = New MsgCritical()
     Public Shared TxtString_msginformation As String
     Public Shared MsgInformation = New MsgInformation()
-    Public Shared ChangePasswordByUser = New ChangePasswordByUser
 
     ' Timer Events
     Dim WithEvents TimerRefreshTime As New System.Windows.Threading.DispatcherTimer
@@ -112,6 +111,8 @@ Public Class AdminWin
     Private Sub Chngpass(sender As Object, e As RoutedEventArgs)
 
         ' Open the window "ChangePasswordByUser"
+        Dim ChangePasswordByUser = New ChangePasswordByUser
+
         ChangePasswordByUser.Show()
 
     End Sub
@@ -126,6 +127,8 @@ Public Class AdminWin
         MsgInformation.Show()
 
         TxtString_msginformation = Nothing
+
+        Dim ChangePasswordByUser = New ChangePasswordByUser
 
         ChangePasswordByUser.Hide()
 

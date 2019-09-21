@@ -28,12 +28,11 @@ Public Class LoginScreen
     'Dim MainAdmin_0 = New MainAdmin()
     Dim ProgresBarAnimation = New ProgresBarAnimation()
     Dim inprocent As Integer = 1
-    'Dim AdminWin = New AdminWin()
 
     Dim regDate As DateTime = DateTime.Now
-    'Dim regexpDate As DateTime = DateTime.Now.AddDays(1)
-    Dim curDate As Date = Date.Now.ToString("yyyy-MM-dd")
-    Public strDate As String = regDate.ToString("yyyy-MM-dd") 'HH:mm:ss")
+    Public Shared NewDate As Date = DateTime.Now.AddDays(30)
+    Public Shared FDate As String = NewDate.ToString("yyyy-MM-dd")
+    Public curDate As String = regDate.ToString("yyyy-MM-dd") 'HH:mm:ss")
     Public Shared expDate As String '= regexpDate.ToString("yyyy-MM-dd HH:mm:ss")
     Dim flags As Boolean = False
 
@@ -265,7 +264,7 @@ Public Class LoginScreen
                 conn.Close()
                 'Call Load()
                 'Me.Hide()
-                'WindowLS.IsEnabled = False
+                WindowLS.IsEnabled = False
                 'WindowLS.WindowStyle = WindowStyle.None
 
                 ProgresBarAnimation.Show()
@@ -281,7 +280,7 @@ Public Class LoginScreen
 
                 WindowLS.IsEnabled = False
 
-                Me.Hide()
+                'Me.Close()
                 ProgresBarAnimation.Show()
                 Call Load()
                 'MsgCheck.Show()
@@ -297,13 +296,15 @@ Public Class LoginScreen
 
                 conn.Close()
 
-                If strDate >= expDate Then
+                If curDate >= expDate Then
 
                     Dim ChangePasswordByUser = New ChangePasswordByUser
 
                     ChangePasswordByUser.Show()
 
                 Else
+
+                    Me.Close()
                     Dim AdminWin = New AdminWin()
 
                     AdminWin.Show()
@@ -391,17 +392,17 @@ Public Class LoginScreen
 
         conn.Close()
 
-        If strDate >= expDate Then
+        If curDate >= expDate Then
 
             Dim ChangePasswordByUser = New ChangePasswordByUser
-            Dim MainWindow As New MainWindow()
+            'Dim MainWindow As New MainWindow()
 
-            'ChangePasswordByUser.Show()
+            ChangePasswordByUser.Show()
 
             'Window.IsEnabled = False
 
-            Me.Close()
-            MainWindow.Show()
+            'Me.Close()
+            'MainWindow.Show()
 
         Else
             Dim MainWindow As New MainWindow()
@@ -505,7 +506,7 @@ Public Class LoginScreen
         Me.Close()
         Dim MainAdmin_0 = New MainAdmin()
 
-        MainAdmin_0.Show
+        MainAdmin_0.Show()
 
     End Sub
 

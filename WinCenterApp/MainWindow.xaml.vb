@@ -86,8 +86,14 @@ Class MainWindow
     Private Sub Lgout(sender As Object, e As RoutedEventArgs)
 
         ' Close current window
-        Dim ChangePasswordByUser = New ChangePasswordByUser
-        ChangePasswordByUser.Close()
+        'Dim ChangePasswordByUser = New ChangePasswordByUser
+        'ChangePasswordByUser.Close()
+        TxtString_msginformation = "Zostaniesz wylogowan-y/-a!"
+
+        MsgInformation.Show()
+
+        TxtString_msginformation = Nothing
+
         Me.Close()
         Dim LoginScreen As New LoginScreen
         LoginScreen.Show()
