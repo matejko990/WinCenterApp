@@ -1,5 +1,6 @@
 ﻿Public Class MainAdmin
 
+    ' Shared variable's for comunication
     Public Shared TxtString_msgcheck As String
     Public Shared MsgCheck = New MsgCheck()
     Public Shared TxtString_msgcritical As String
@@ -8,6 +9,7 @@
     Public Shared MsgInformation = New MsgInformation()
     'Public Shared SignUp = New SignUp()
 
+    'Other variable's
     Dim X As Integer = 0
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
@@ -18,11 +20,7 @@
 
     Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
 
-        'Me.Hide()
-
-        'LoginScreen.Show()
-
-        End
+        End ' Exit program
 
     End Sub
 
@@ -35,7 +33,7 @@
             Me.Close()
 
             Dim SignUp = New SignUp()
-            SignUp.Show()
+            SignUp.Show() 'Registraion window
 
             txtPassword.Clear() ' czyszczenie pola
             Ps.Foreground = Brushes.White
@@ -44,7 +42,7 @@
 
             TxtString_msginformation = "Podaj prawidłowe hasło!"
 
-            MsgInformation.Show()
+            MsgInformation.Show() ' Information message
 
             TxtString_msginformation = Nothing
 
@@ -52,7 +50,7 @@
 
             txtPassword.Password = Nothing
 
-            CountLog()
+            CountLog() 'Check count login
 
         End If
 

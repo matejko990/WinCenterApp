@@ -3,31 +3,24 @@ Imports System.Data.SqlClient
 
 Public Class ChangePasswordByUser
 
-    ' Global variables
-    'Public Shared LoginScreen = New LoginScreen
-    'Public Shared MainWindow = New MainWindow
+    ' Variable's to another object from class
     Dim ObjTypeUserFromLS As New LoginScreen
-    Dim ObjWinMW As New MainWindow
-    Dim ObjWinADM As New AdminWin
     Dim ObjCurDate As New LoginScreen
     Dim ObjExpDate As New LoginScreen
     Dim ObjFDate As New LoginScreen
-    Public ObjLSWindow As New LoginScreen
     Dim exp As Boolean = False
 
-    ' Variables
+    ' Variable's object with LoginScreen
 #Disable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
     Dim CurDateMW As String = ObjCurDate.curDate
     Dim ExpDateMw As String = ObjExpDate.expDate
     Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
 #Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
-    ' Variables cooperating with other windows
+    ' Variables cooperating with other windows - shared variable's for comunication
     Public Shared MsgCheck As New MsgCheck()
     Public Shared MsgCritical As New MsgCritical()
     Public Shared MsgInformation = New MsgInformation()
-
-    ' Variables cooperating with other windows
     Public Shared TxtString_msgcheck As String
     Public Shared TxtString_msgcritical As String
     Public Shared TxtString_msginformation As String
@@ -72,7 +65,7 @@ Public Class ChangePasswordByUser
         ' Adds name file as String
         Dim value As String = String.Join("", files) & ".mdf"
 
-        ' Other variable
+        ' Other variable for connetion to db
         Dim con As SqlConnection
         Dim cmd As SqlCommand
 
@@ -83,7 +76,7 @@ Public Class ChangePasswordByUser
 
             TxtString_msginformation = "Hasła nie pasują do siebie!"
 
-            MsgInformation.Show()
+            MsgInformation.Show() 'Information message
 
             TxtString_msginformation = Nothing
 
@@ -127,7 +120,7 @@ Public Class ChangePasswordByUser
 
             TxtString_msginformation = "Hasło musi zawierać min. 6 znaków!"
 
-            MsgInformation.Show()
+            MsgInformation.Show() 'Information message
 
             TxtString_msginformation = Nothing
 
@@ -135,11 +128,18 @@ Public Class ChangePasswordByUser
 
             OldPassword.Focus()
 
+            ' Close connetion with database
+            con.Close()
+
             Exit Sub
 
         Else
 
+            ' Save changes
             cmd.ExecuteNonQuery()
+
+            ' Close connetion with database
+            con.Close()
 
         End If
 
@@ -148,11 +148,12 @@ Public Class ChangePasswordByUser
 
         ' Show msgbox
         MsgCheck.Show()
-
         TxtString_msgcheck = Nothing
 
-        ' Hide acctually window
+        ' Close acctually window
         Me.Close()
+
+        '--------------------------------------------------------------------------------------------------------------------------------------
 
         ' Properties for window
         Cl.IsEnabled = True
@@ -171,9 +172,13 @@ Public Class ChangePasswordByUser
             ' Show Admin or User panel
             If TypeUser = "Administrator" Then
 
-                My.Application.Windows(3).Close()
+                For count As Integer = My.Application.Windows.Count - 1 To 1 Step -1
 
-                'ObjLSWindow.WindowLS.Close()
+                    My.Application.Windows(count).Close() 'Close all windows
+
+                Next
+
+                Dim ObjWinADM As New AdminWin
                 ObjWinADM.Show()
 
             ElseIf TypeUser = "Uzytkownik" Then
@@ -184,6 +189,7 @@ Public Class ChangePasswordByUser
 
                 'Next
 
+                Dim ObjWinMW As New MainWindow
                 ObjWinMW.Show()
 
             End If
@@ -247,7 +253,6 @@ Public Class ChangePasswordByUser
             ' Enabled retype textbox
             RetypePassword_pass.IsEnabled = True
 
-
         End If
 
     End Sub
@@ -267,7 +272,6 @@ Public Class ChangePasswordByUser
             LblNewPass.Foreground = Brushes.Green
 
             RetypePassword_txt.IsEnabled = True
-
 
         End If
 
@@ -584,35 +588,20 @@ Public Class ChangePasswordByUser
 
     Private Sub Quit_Click(sender As Object, e As RoutedEventArgs)
 
-        If exp = False Then
-
-            ' Close window
-            Me.Close()
-
-        Else
-
-            Me.Close()
-            'MainWindow.Hide()
-            ' LoginScreen.Show
-
-        End If
+        Me.Close()
 
     End Sub
 
     Private Sub X_Click(sender As Object, e As RoutedEventArgs) Handles Cl.Click
 
-        If exp = False Then
+        'If exp = False Then
 
-            ' Close window
-            Me.Close() 'Me.Hide
+        '    ' Close window
+        '    Me.Close() 'Me.Hide
 
-        Else
+        'End If
 
-            Me.Close()
-            'MainWindow.Hide()
-            'LoginScreen.Show
-
-        End If
+        Me.Close()
 
     End Sub
 

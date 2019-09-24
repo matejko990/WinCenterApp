@@ -1,16 +1,18 @@
 ﻿Imports System
 Imports System.Data
 Imports System.Data.SqlClient
-'Imports System.Windows.Threading
 Imports System.ComponentModel
 Imports System.Text.RegularExpressions
 
 Public Class LoginScreen
 
+    'Withevents
     Dim WithEvents BackgroundWorker1 As BackgroundWorker
 
+    'Shared variable for TypeUser
     Public Shared TypeUserName As String
 
+    'Shared variable's for comunication
     Public Shared TxtString_msgcheck As String
     Public Shared MsgCheck = New MsgCheck()
     Public Shared TxtString_msgcritical As String
@@ -18,143 +20,32 @@ Public Class LoginScreen
     Public Shared TxtString_msginformation As String
     Public Shared MsgInformation = New MsgInformation()
 
-    Public UserNameLog As String = Environment.UserName
-
+    'Connetion variable's
     Dim conn As SqlConnection 'Dim connection As New SqlClient.SqlConnection
     Dim cmd As SqlCommand     'Dim command As New SqlClient.SqlCommand
     Dim dr As SqlDataReader
+
+    'Other variable's
     Dim X As Integer = 0
-    'Dim MainWindow As New MainWindow()
-    'Dim MainAdmin_0 = New MainAdmin()
+    Public UserNameLog As String = Environment.UserName
     Dim ProgresBarAnimation = New ProgresBarAnimation()
     Dim inprocent As Integer = 1
+    Dim flags As Boolean = False
 
+    'Date variable's
     Dim regDate As DateTime = DateTime.Now
+    Public curDate As String = regDate.ToString("yyyy-MM-dd") 'HH:mm:ss")
     Public Shared NewDate As Date = DateTime.Now.AddDays(30)
     Public Shared FDate As String = NewDate.ToString("yyyy-MM-dd")
-    Public curDate As String = regDate.ToString("yyyy-MM-dd") 'HH:mm:ss")
     Public Shared expDate As String '= regexpDate.ToString("yyyy-MM-dd HH:mm:ss")
-    Dim flags As Boolean = False
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
 
-        'MainWindow.Hide()
-
-        'WindowLS.IsEnabled = True
-        'WindowLS.WindowStyle = WindowStyle.ThreeDBorderWindow  
-
         'Call ForceSingleInstanceApplication()
-
-        'Dim SignUp = New SignUp()
-
-        'Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-        'location = New Uri(location).LocalPath & "\"
-
-        'Dim files As New List(Of String)
-        'files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-        '           Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
-
-        'Dim value As String = String.Join("", files) & ".mdf"
-
-        'Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
-        'Dim con As New SqlConnection(str)
-        'Dim table As New DataTable("Table")
-        'Dim username As DataRow = table.NewRow
-
-        'Dim com As String = "Select Id, Username, TypeUser from [User]"
-
-        'Dim Adpt As New SqlDataAdapter(com, con)
-
-        'Dim ds As DataSet = New DataSet()
-
-        'Adpt.Fill(ds, "User")
-
-        'Dim TableCount As Integer = ds.Tables(0).Rows.Count
-        'Dim InfoCompareValues_2 As Boolean = CompareValues_2()
-        'Dim InfoCompareValues_1 As Boolean = CompareValues_1()
-
-        'con.Close()
-
-        'If TableCount < 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = False Then ' ok
-
-        '    TypeUserName = "Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    MsgBox("Dodaj przynajmniej jednego administratora i użytkownika!")
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount < 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = True Then 'ok
-
-
-        '    TypeUserName = "Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount < 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = False Then
-
-        '    TypeUserName = "Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount >= 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = False Then
-
-        '    TypeUserName ="Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    MsgBox("Dodaj przynajmniej jednego administratora i użytkownika!")
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount >= 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = True Then'ok
-
-        '    TypeUserName = "Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount >= 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = False Then
-
-        '    TypeUserName = "Administrator"
-
-        '    txtPassword.IsEnabled = False
-
-        '    con.Close()
-
-        '    SignUp.Show()
-        '    Me.Hide()
-
-        'ElseIf TableCount >= 2 And InfoCompareValues_2 = True And InfoCompareValues_1 = True Then 'ok
-
-        '    txtPassword.IsEnabled = True
-
-        'End If
 
     End Sub
 
-    'Public Sub ForceSingleInstanceApplication()
+    'Public Sub ForceSingleInstanceApplication() 'Only run one instance app
     '    'Get a reference to the current process
     '    Dim MyProc As Process = Process.GetCurrentProcess
 
@@ -168,63 +59,7 @@ Public Class LoginScreen
     '    End If
     'End Sub
 
-    'Public Function CompareValues_1()
-
-    '    Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-    '    location = New Uri(location).LocalPath & "\"
-
-    '    Dim files As New List(Of String)
-    '    files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-    '               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
-
-    '    Dim value As String = String.Join("", files) & ".mdf"
-
-    '    Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
-    '    Dim con As New SqlConnection(str)
-    '    con.Open()
-
-    '    Dim sSql As String = "Select Username, TypeUser From [User] Where Username = @Username And TypeUser = @TypeUser and IsDelete=@IsDelete"
-
-    '    Using Command As New SqlCommand(sSql, con)
-    '        Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = UserNameLog
-    '        Command.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = "Uzytkownik"
-    '        Command.Parameters.Add("@IsDelete", SqlDbType.Bit).Value = False
-    '        Dim Reader As SqlDataReader = Command.ExecuteReader()
-    '        Return Reader.HasRows()
-
-    '    End Using
-
-    'End Function
-
-    'Public Function CompareValues_2()
-
-    '    Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-    '    location = New Uri(location).LocalPath & "\"
-
-    '    Dim files As New List(Of String)
-    '    files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-    '               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
-
-    '    Dim value As String = String.Join("", files) & ".mdf"
-
-    '    Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
-    '    Dim con As New SqlConnection(str)
-    '    con.Open()
-
-    '    Dim sSql As String = "Select Username, TypeUser From [User] Where Username = @Username And TypeUser = @TypeUser and IsDelete=@IsDelete"
-
-    '    Using Command As New SqlCommand(sSql, con)
-    '        Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = UserNameLog
-    '        Command.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = "Administrator"
-    '        Command.Parameters.Add("@IsDelete", SqlDbType.Bit).Value = False
-    '        Dim Reader As SqlDataReader = Command.ExecuteReader()
-    '        Return Reader.HasRows()
-
-    '    End Using
-
-    'End Function
-
-    Sub Connectdb()
+    Sub Connectdb() 'Create connection with database
 
         Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
         location = New Uri(location).LocalPath & "\"
@@ -234,80 +69,75 @@ Public Class LoginScreen
         files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
                Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
 
-        'Dim newdir As Object = files
-
         Dim value As String = String.Join("", files) & ".mdf"
 
-        conn = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30") 'connection.ConnectionString = ("Data Source=MYKDONALD-PC\SQLEXPRESS;Initial Catalog=Data.mdf;Integrated Security=True")
-        conn.Open()
+        conn = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
+        'connection.ConnectionString = ("Data Source=MYKDONALD-PC\SQLEXPRESS;Initial Catalog=Data.mdf;Integrated Security=True")
+        conn.Open() 'Open connetion
 
     End Sub
 
     Private Sub BtnSubmit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) 'Handles btnSubmit.Click
 
-        Call Connectdb()
+        Call Connectdb() 'Open connection with db
 
+        'Sql
         cmd = New SqlCommand("SELECT * FROM [User] WHERE Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND Password COLLATE Latin1_General_CS_AS =CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & txtPassword.Password & "'),2) AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'AND IsDelete = '" & flags & "'", conn)
 
+        'Read db
         dr = cmd.ExecuteReader
         dr.Read()
 
-        If dr.HasRows Then 'If count > 0 Then
+        'Check pass and login
+        If dr.HasRows Then
 
+            'If everything all right green label brushes
             Ps.Foreground = Brushes.Green
             Us.Foreground = Brushes.Green
 
             If ChoiseTypeUser.Text = "Użytkownik" Then
 
+                'USER
+
                 TypeUserName = "Uzytkownik"
 
-                conn.Close()
-                'Call Load()
-                'Me.Hide()
-                WindowLS.IsEnabled = False
-                'WindowLS.WindowStyle = WindowStyle.None
+                WindowLS.IsEnabled = False 'block main window
 
                 ProgresBarAnimation.Show()
-                Call Load()
-                'MsgCheck.Show()
-                Call Main()
+
+                Call Load() 'loading timeout
+
+                Call Main() 'next procedure
 
             Else
+                'ADMIN
 
                 TypeUserName = "Administrator"
 
-                conn.Close()
+                WindowLS.IsEnabled = False 'block main window
 
-                WindowLS.IsEnabled = False
-
-                'Me.Close()
                 ProgresBarAnimation.Show()
-                Call Load()
-                'MsgCheck.Show()
 
-                Call Connectdb()
+                Call Load() 'loading timeout
 
-                cmd = New SqlCommand("Select * from [User] Where Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
-                dr = cmd.ExecuteReader
-
-                dr.Read()
-
+                'ExpiryDate for TypeUser
                 expDate = dr.GetValue(6)
 
+                'Close connection
                 conn.Close()
 
+                'Check expirydate with currentdate
                 If curDate >= expDate Then
 
                     Dim ChangePasswordByUser = New ChangePasswordByUser
-
-                    ChangePasswordByUser.Show()
+                    ChangePasswordByUser.Show() 'Window changing password
 
                 Else
 
                     Me.Close()
-                    Dim AdminWin = New AdminWin()
 
-                    AdminWin.Show()
+                    Dim AdminWin = New AdminWin()
+                    AdminWin.Show() 'Admin windows
 
                 End If
 
@@ -315,20 +145,21 @@ Public Class LoginScreen
 
         Else
 
+            'Close connection
+            conn.Close()
 
             If txtPassword.Password = "" Then
 
                 TxtString_msginformation = "Pole 'hasła:' jest puste!" & vbNewLine & "Wprowadź hasło!"
 
+                'Red label brushes - failed login
                 Ps.Foreground = Brushes.Red
                 Us.Foreground = Brushes.White
 
                 MsgInformation.Show()
 
                 TxtString_msginformation = Nothing
-                'txtUsername.Clear()
                 txtPassword.Focus()
-                conn.Close()
 
                 Exit Sub
 
@@ -336,15 +167,14 @@ Public Class LoginScreen
 
                 TxtString_msginformation = "Nieprawidłowe hasło!" & vbNewLine & "Wprowadź ponownie poprawne hasło logowania!"
 
-                Ps.Foreground = Brushes.Red
+                Ps.Foreground = Brushes.Red 'failed login pass
 
                 MsgInformation.Show() 'MsgBox("Incorrect login please check Username Or Password!", MsgBoxStyle.Critical, "Error")
 
                 TxtString_msginformation = Nothing
                 txtPassword.Clear()
-                conn.Close()
 
-                CountLog()
+                CountLog() 'Verification count login
 
             End If
 
@@ -354,11 +184,11 @@ Public Class LoginScreen
 
     Sub CountLog()
 
-        'warunek 3 prób logowania i zakończenie programu
+        'Three login attempts
         X = X + 1
+
         If X >= 3 Then
 
-            'nadanie zmiennej globalnej wartości string
             TxtString_msgcritical = "Przekroczona liczba błędnych logowań - aplikacja zostanie zamknięta!"
 
             'timeout 1s  
@@ -369,61 +199,61 @@ Public Class LoginScreen
             'Clean variable
             TxtString_msgcritical = Nothing
 
-            'zakończenie działania programu
+            'Exit program
             End
 
         End If
 
-        'Close connection
-        conn.Close()
+    End Sub
+
+    Sub Load() 'loading timeout
+
+        Cursor = Cursors.Wait
+
+        System.Threading.Thread.Sleep(New TimeSpan(0, 0, 0, 0, 500))
+
+        Cursor = Cursors.Arrow
 
     End Sub
 
-    Sub Main() 'wyświetla główne okna obsługi i ukrywa ekran logowania 
+    Sub Main() 'Main window for User
 
-        Call Connectdb()
-
-        cmd = New SqlCommand("Select * from [User] Where Username COLLATE Latin1_General_CS_AS ='" & txtUsername.Text & "'AND TypeUser COLLATE Latin1_General_CS_AS ='" & ChoiseTypeUser.Text & "'", conn)
-        dr = cmd.ExecuteReader
-
-        dr.Read()
-
+        'ExpiryDate for TypeUser
         expDate = dr.GetValue(6)
 
+        'Close connection
         conn.Close()
 
+        'Check expirydate with currentdate
         If curDate >= expDate Then
 
             Dim ChangePasswordByUser = New ChangePasswordByUser
-            'Dim MainWindow As New MainWindow()
-
-            ChangePasswordByUser.Show()
-
-            'Window.IsEnabled = False
-
-            'Me.Close()
-            'MainWindow.Show()
+            ChangePasswordByUser.Show() 'Window changing password
 
         Else
-            Dim MainWindow As New MainWindow()
+
             Me.Close()
-            MainWindow.Show()
+
+            Dim MainWindow As New MainWindow()
+            MainWindow.Show() 'Window for User
 
         End If
 
     End Sub
 
-    Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click 'obsługa button'a
+    Private Sub BtnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click 'Cancel button
 
+        'Check connection with db
         If conn Is Nothing Then
 
         Else
 
+            'Close connection
             conn.Close()
 
         End If
 
-        End
+        End 'End program
 
     End Sub
 
@@ -464,16 +294,6 @@ Public Class LoginScreen
 
     End Sub
 
-    Sub Load()
-
-        Cursor = Cursors.Wait
-
-        System.Threading.Thread.Sleep(New TimeSpan(0, 0, 0, 0, 500))
-
-        Cursor = Cursors.Arrow
-
-    End Sub
-
     Private Sub TxtUsername_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles txtUsername.MouseDoubleClick
 
         txtUsername.Clear()
@@ -497,16 +317,16 @@ Public Class LoginScreen
 
     Private Sub Panel_Loaded(sender As Object, e As RoutedEventArgs)
 
-        txtUsername.Text = UserNameLog
+        txtUsername.Text = UserNameLog 'Auto paste username from variable
 
     End Sub
 
     Private Sub MainAdmin_Click(sender As Object, e As RoutedEventArgs) Handles MainAdmin.Click
 
         Me.Close()
-        Dim MainAdmin_0 = New MainAdmin()
 
-        MainAdmin_0.Show()
+        Dim MainAdmin_0 = New MainAdmin()
+        MainAdmin_0.Show() 'Window for global hide admin
 
     End Sub
 

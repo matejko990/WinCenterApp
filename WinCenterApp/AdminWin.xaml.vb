@@ -1,10 +1,12 @@
 ﻿Imports System.Data
-Imports System.Data.SqlClient
+'Imports System.Data.SqlClient
 
 Public Class AdminWin
 
+    'Other variable
     Public UserNameLog As String = Environment.UserName
 
+    'Shared variable's for comunication
     Public Shared TxtString_msgcheck As String
     Public Shared MsgCheck = New MsgCheck()
     Public Shared TxtString_msgcritical As String
@@ -12,47 +14,10 @@ Public Class AdminWin
     Public Shared TxtString_msginformation As String
     Public Shared MsgInformation = New MsgInformation()
 
-    ' Timer Events
+    'Timer Events
     Dim WithEvents TimerRefreshTime As New System.Windows.Threading.DispatcherTimer
 
     Private Sub Window_Loaded(ByVal sender As System.Object, ByVal e As System.Windows.RoutedEventArgs) Handles MyBase.Loaded
-
-        Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-        location = New Uri(location).LocalPath & "\"
-
-        Dim files As New List(Of String)
-        files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-                   Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
-
-        Dim value As String = String.Join("", files) & ".mdf"
-
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
-        Dim con As New SqlConnection(str)
-        Dim table As New DataTable("Table")
-        Dim username As DataRow = table.NewRow
-
-        Dim com As String = "Select Id, Username, Password, TypeUser, Email, RegisterDate from [User]"
-
-        Dim Adpt As New SqlDataAdapter(com, con)
-
-        Dim ds As DataSet = New DataSet()
-
-        Adpt.Fill(ds, "User")
-
-        Dim TableCount As Integer = ds.Tables(0).Rows.Count
-        Dim InfoCompareValues_2 As Boolean = CompareValues_2()
-
-        If TableCount <= 2 And InfoCompareValues_2 = False Then
-
-            Chngps.IsEnabled = False
-
-        ElseIf TableCount <= 2 And InfoCompareValues_2 = True Then
-
-            Chngps.IsEnabled = True
-
-        End If
-
-        con.Close()
 
         ' Label content - UserName
         UserNameLabel.Content = "Zalogowany użytkownik: " & Environment.UserName & " :D"
@@ -70,49 +35,10 @@ Public Class AdminWin
 
     End Sub
 
-    Public Function CompareValues_2()
-
-        Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-        location = New Uri(location).LocalPath & "\"
-
-        Dim files As New List(Of String)
-        files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-                   Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
-
-        Dim value As String = String.Join("", files) & ".mdf"
-
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
-        Dim con As New SqlConnection(str)
-        con.Open()
-
-        Dim sSql As String = "Select Username, TypeUser From [User] Where Username = @Username And TypeUser = @TypeUser"
-
-        Using Command As New SqlCommand(sSql, con)
-            Command.Parameters.Add("@Username", SqlDbType.VarChar).Value = UserNameLog
-            Command.Parameters.Add("@TypeUser", SqlDbType.VarChar).Value = "Administrator"
-            Dim Reader As SqlDataReader = Command.ExecuteReader()
-            Return Reader.HasRows()
-
-        End Using
-
-    End Function
-
-    'Private Sub Registration_Click(sender As Object, e As RoutedEventArgs)
-
-    '    ' New window "SignUp"
-    '    Dim SignUp As SignUp = New SignUp
-
-    '    ' Open the window "SignUp" and close acctually window
-    '    SignUp.Show()
-    '    Me.Hide()
-
-    'End Sub
-
     Private Sub Chngpass(sender As Object, e As RoutedEventArgs)
 
         ' Open the window "ChangePasswordByUser"
         Dim ChangePasswordByUser = New ChangePasswordByUser
-
         ChangePasswordByUser.Show()
 
     End Sub
@@ -128,12 +54,8 @@ Public Class AdminWin
 
         TxtString_msginformation = Nothing
 
-        Dim ChangePasswordByUser = New ChangePasswordByUser
-
-        ChangePasswordByUser.Hide()
-
         ' Close current window
-        Me.Hide()
+        Me.Close()
 
         ' Variable and call to the login window
         Dim LoginScreen = New LoginScreen()
