@@ -47,7 +47,7 @@ Public Class SignUp
 
             Dim value As String = String.Join("", files) & ".mdf"
 
-            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
             Dim con As New SqlConnection(str)
             Dim table As New DataTable("Table")
             Dim username As DataRow = table.NewRow
@@ -64,8 +64,6 @@ Public Class SignUp
             'Dim InfoCompareValues_2 As Boolean = CompareValues_2()
             Dim InfoCompareValues_2 As Boolean = CompareValues_LoginAdminFalse()
             Dim InfoCompareValues_1 As Boolean = CompareValues_LoginUserFalse()
-
-            con.Close()
 
             If TableCount < 2 And InfoCompareValues_2 = False And InfoCompareValues_1 = False Then
 
@@ -128,6 +126,9 @@ Public Class SignUp
             TimerRefreshTime.Start()
             EmailBox_1.Text = "@alior.pl"
 
+            con.Close()
+            SqlConnection.ClearAllPools()
+
             'RegisterLogin.Text = UserNameLog
             'RegisterLogin.Focus()
 
@@ -138,6 +139,8 @@ Public Class SignUp
             MsgCritical.Show()
 
             TxtString_msgcritical = Nothing
+
+            SqlConnection.ClearAllPools()
 
         End Try
 
@@ -343,7 +346,7 @@ Generate:
 
             Dim value As String = String.Join("", files) & ".mdf"
 
-            connection = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
+            connection = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30")
 
             If connection.State = ConnectionState.Closed Then
 
@@ -368,6 +371,7 @@ Generate:
                     TxtString_msginformation = Nothing
 
                     connection.Close()
+                    SqlConnection.ClearAllPools()
 
                     Codelbl.Foreground = Brushes.Red
 
@@ -392,6 +396,7 @@ Generate:
                         TxtString_msginformation = Nothing
 
                         connection.Close()
+                        SqlConnection.ClearAllPools()
 
                         Exit Sub
 
@@ -408,6 +413,7 @@ Generate:
                     TxtString_msginformation = Nothing
 
                     connection.Close()
+                    SqlConnection.ClearAllPools()
 
                     Exit Sub
 
@@ -428,6 +434,7 @@ Generate:
                 cmd.ExecuteNonQuery()
                 cmd.Dispose()
                 connection.Close()
+                SqlConnection.ClearAllPools()
 
                 'MsgBox("Sign Up Success about time: " & strDate)
 
@@ -463,6 +470,7 @@ Generate:
                 VerCode.Password = Nothing
 
                 connection.Close()
+                SqlConnection.ClearAllPools()
 
                 Call GeraCaptcha()
 
@@ -477,6 +485,7 @@ Generate:
             TxtString_msgcritical = Nothing
 
             connection.Close()
+            SqlConnection.ClearAllPools()
 
         End Try
 
@@ -498,7 +507,7 @@ Generate:
 
             Dim value As String = String.Join("", files) & ".mdf"
 
-            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
             Dim con As New SqlConnection(str)
             Dim table As New DataTable("Table")
             Dim username As DataRow = table.NewRow
@@ -521,6 +530,7 @@ Generate:
             Next
 
             con.Close()
+            SqlConnection.ClearAllPools()
 
         Catch ex As Exception
 
@@ -529,6 +539,8 @@ Generate:
             MsgCritical.Show()
 
             TxtString_msgcritical = Nothing
+
+            SqlConnection.ClearAllPools()
 
         End Try
 
@@ -547,7 +559,7 @@ Generate:
 
             Dim value As String = String.Join("", files) & ".mdf"
 
-            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+            Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
             Dim con As New SqlConnection(str)
             Dim com As String = "Select Id, Username, Password, TypeUser, Email, RegisterDate, ExpiryDate, IsDelete from [User]"
             Dim Adpt As New SqlDataAdapter(com, con)
@@ -576,6 +588,7 @@ Generate:
             End If
 
             con.Close()
+            SqlConnection.ClearAllPools()
 
         Catch ex As Exception
 
@@ -584,6 +597,8 @@ Generate:
             MsgCritical.Show()
 
             TxtString_msgcritical = Nothing
+
+            SqlConnection.ClearAllPools()
 
         End Try
 
@@ -603,7 +618,7 @@ Generate:
 
             Dim value As String = String.Join("", files) & ".mdf"
 
-            Dim connection As New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
+            Dim connection As New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30")
 
             'Dim sql As String = "INSERT INTO [User](Username,Password,TypeUser,Email,RegisterDate,ExpiryDate,IsDelete) VALUES('" & RegisterLogin.Text & "',CONVERT(VARCHAR(50),HashBytes('SHA2_512','" & RegisterPassword.Password & "'),2),'" & TypeUser.Text & "','" & EmailBox.Text + EmailBox_1.Text & "','" & strDate & "','" & expDate & "','" & flags & "')"
 
@@ -630,6 +645,7 @@ Generate:
                     Codelbl.Foreground = Brushes.Red
 
                     connection.Close()
+                    SqlConnection.ClearAllPools()
 
                     Exit Sub
 
@@ -646,6 +662,7 @@ Generate:
                     TxtString_msgcheck = Nothing
 
                     connection.Close()
+                    SqlConnection.ClearAllPools()
 
                     DelId.Text = Nothing
                     txtCaptcha.Text = Nothing
@@ -666,6 +683,7 @@ Generate:
                     TxtString_msginformation = Nothing
 
                     connection.Close()
+                    SqlConnection.ClearAllPools()
 
                 End If
 
@@ -699,6 +717,7 @@ Generate:
             End If
 
             connection.Close()
+            SqlConnection.ClearAllPools()
 
         Catch ex As Exception
 
@@ -709,6 +728,7 @@ Generate:
             TxtString_msgcritical = Nothing
 
             connection.Close()
+            SqlConnection.ClearAllPools()
 
         End Try
 
@@ -725,7 +745,7 @@ Generate:
 
         Dim value As String = String.Join("", files) & ".mdf"
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -751,7 +771,7 @@ Generate:
 
         Dim value As String = String.Join("", files) & ".mdf"
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -778,7 +798,7 @@ Generate:
 
         Dim value As String = String.Join("", files) & ".mdf"
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -805,7 +825,7 @@ Generate:
 
         Dim value As String = String.Join("", files) & ".mdf"
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -833,7 +853,7 @@ Generate:
 
         Dim value As String = String.Join("", files) & ".mdf"
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -887,7 +907,7 @@ Generate:
 
         'DelId.Text = Nothing
 
-        Dim digitsOnly As Regex = New Regex("([^\S])|([^\D])")
+        Dim digitsOnly As Regex = New Regex("([^\S])|([^\D])|(\@)")
         EmailBox.Text = digitsOnly.Replace(EmailBox.Text, "")
 
         digitsOnly = Nothing
@@ -911,6 +931,8 @@ Generate:
         'MsgCritical.Close()
         'MsgCheck.Close()
         Me.Close()
+        connection.Close()
+        SqlConnection.ClearAllPools()
 
         RegisterPassword.Clear()
         EmailBox.Clear()
@@ -1110,6 +1132,9 @@ Generate:
 
         End If
 
+        'connection.Close()
+        SqlConnection.ClearAllPools()
+
     End Sub
 
     Private Sub EmailBox_LostFocus(sender As Object, e As RoutedEventArgs) Handles EmailBox.LostFocus
@@ -1125,6 +1150,8 @@ Generate:
         VerCode.Clear()
         txtCaptcha.Text = ""
         DelId.Clear()
+        'connection.Close()
+        SqlConnection.ClearAllPools()
 
     End Sub
 
@@ -1135,6 +1162,8 @@ Generate:
         VerCode.Clear()
         txtCaptcha.Text = ""
         DelId.Clear()
+        'connection.Close()
+        SqlConnection.ClearAllPools()
 
     End Sub
 

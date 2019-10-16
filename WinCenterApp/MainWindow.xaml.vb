@@ -603,6 +603,8 @@ Class MainWindow
                         ' Next lines(i)
                     Next i
 
+                    ProgressBar1.UpdateLayout()
+
                     ' Next file "k" from list collection
                 Next k
 

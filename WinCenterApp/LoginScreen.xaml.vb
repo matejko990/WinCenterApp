@@ -21,8 +21,9 @@ Public Class LoginScreen
     Public Shared MsgInformation = New MsgInformation()
 
     'Connetion variable's
-    Dim conn As SqlConnection 'Dim connection As New SqlClient.SqlConnection
-    Dim cmd As SqlCommand     'Dim command As New SqlClient.SqlCommand
+    'Dim conn As SqlConnection
+    Dim conn As New SqlClient.SqlConnection
+    Dim cmd As SqlCommand
     Dim dr As SqlDataReader
 
     'Other variable's
@@ -61,19 +62,34 @@ Public Class LoginScreen
 
     Sub Connectdb() 'Create connection with database
 
-        Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
-        location = New Uri(location).LocalPath & "\"
-        'Dim inputString As String = InputBox("Please input a file name:", "File Name", "DefaultFileName")
+        Try
 
-        Dim files As New List(Of String)
-        files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
-               Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
+            Dim location As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly.Location)
+            location = New Uri(location).LocalPath & "\"
+            'Dim inputString As String = InputBox("Please input a file name:", "File Name", "DefaultFileName")
 
-        Dim value As String = String.Join("", files) & ".mdf"
+            Dim files As New List(Of String)
+            files.AddRange(IO.Directory.GetFiles(location, "*.mdf").
+                   Select(Function(f) IO.Path.GetFileNameWithoutExtension(f)))
 
-        conn = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
-        'connection.ConnectionString = ("Data Source=MYKDONALD-PC\SQLEXPRESS;Initial Catalog=Data.mdf;Integrated Security=True")
-        conn.Open() 'Open connetion
+            Dim value As String = String.Join("", files) & ".mdf"
+
+            'MsgBox(location & value)
+
+            'conn = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & "; Integrated Security=False; Trusted_Connection=Yes; Connect Timeout=30") 'Integrated Security=True; MultipleActiveResultSets=True;; Persist Security Info=False;
+            conn.ConnectionString = ("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & value & ";Connect Timeout=30") 'AttachDbFilename=" & location & value & ;User Id=alioruser;Password=aliorpass
+
+            conn.Open() 'Open connetion
+
+        Catch ex As Exception
+
+            TxtString_msgcritical = "Wystąpił nieoczekiwany błąd! Szczegóły: " & ex.ToString
+
+            MsgCritical.Show()
+
+            TxtString_msgcritical = Nothing
+
+        End Try
 
     End Sub
 
@@ -125,6 +141,8 @@ Public Class LoginScreen
 
                 'Close connection
                 conn.Close()
+                dr.Close()
+                SqlConnection.ClearAllPools()
 
                 'Check expirydate with currentdate
                 If curDate >= expDate Then
@@ -147,6 +165,8 @@ Public Class LoginScreen
 
             'Close connection
             conn.Close()
+            dr.Close()
+            SqlConnection.ClearAllPools()
 
             If txtPassword.Password = "" Then
 
@@ -223,6 +243,8 @@ Public Class LoginScreen
 
         'Close connection
         conn.Close()
+        dr.Close()
+        SqlConnection.ClearAllPools()
 
         'Check expirydate with currentdate
         If curDate >= expDate Then
@@ -250,10 +272,19 @@ Public Class LoginScreen
 
             'Close connection
             conn.Close()
+            SqlConnection.ClearAllPools()
+
+            If dr Is Nothing Then
+
+            Else
+
+                dr.Close()
+
+            End If
 
         End If
 
-        End 'End program
+            End 'End program
 
     End Sub
 

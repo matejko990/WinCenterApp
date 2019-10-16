@@ -59,5 +59,14 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''Wyszukuje zlokalizowany ciąg podobny do ciągu .
+        '''</summary>
+        Friend ReadOnly Property ConnectionString() As String
+            Get
+                Return ResourceManager.GetString("ConnectionString", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

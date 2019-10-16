@@ -3,8 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:mMangerCenter"
     StartupUri="LoginScreen.xaml"
-ShutdownMode="OnLastWindowClose">
+    ShutdownMode="OnLastWindowClose">
+    
+    <!--Startup="Application_Startup">-->       
+
     <Application.Resources>
         
     </Application.Resources>
+    
 </Application>

@@ -262,7 +262,7 @@
                     <ComboBoxItem x:Name="UserItem" Content="Użytkownik"  FontWeight="Bold" FontStyle="Italic" VerticalContentAlignment="Stretch" IsSelected="True"/>
                 </ComboBox>
                 <Grid Margin="10,128,10,-153">
-                    <TextBox x:Name="EmailBox" Margin="0,0,70,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" MaxLength="35"/>
+                    <TextBox x:Name="EmailBox" Margin="0,0,70,0" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" MaxLength="35" ToolTip="Wprowadź email bez maski: '@alior.pl'"/>
                     <TextBox x:Name="EmailBox_1" Margin="130,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="60" IsEnabled="False"/>
                 </Grid>
 

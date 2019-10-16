@@ -99,7 +99,7 @@ Public Class ChangePasswordByUser
         End If
 
         ' New sqlconntection with database
-        con = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30")
+        con = New SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30")
         Dim query As String = "UPDATE [User] SET Password = CONVERT(VARCHAR(50),HashBytes('SHA2_512', @Password),2), ExpiryDate = @FutureDate WHERE Username = @Username And TypeUser = @TypeUser"
 
         ' Open conntection with database
@@ -130,6 +130,7 @@ Public Class ChangePasswordByUser
 
             ' Close connetion with database
             con.Close()
+            SqlConnection.ClearAllPools()
 
             Exit Sub
 
@@ -140,6 +141,7 @@ Public Class ChangePasswordByUser
 
             ' Close connetion with database
             con.Close()
+            SqlConnection.ClearAllPools()
 
         End If
 
@@ -198,6 +200,7 @@ Public Class ChangePasswordByUser
 
         ' Close connetion with database
         con.Close()
+        SqlConnection.ClearAllPools()
 
     End Sub
 
@@ -216,7 +219,7 @@ Public Class ChangePasswordByUser
         Dim TypeUser As String = ObjTypeUserFromLS.TypeUserName
 #Enable Warning BC42025 ' Dostęp przez wystąpienie do udostępnionej składowej, stałej składowej, składowej wyliczenia lub typu zagnieżdżonego
 
-        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Integrated Security=True;Connect Timeout=30"
+        Dim str As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" & location & value & ";Initial Catalog=" & location & value & ";Connect Timeout=30"
         Dim con As New SqlConnection(str)
         con.Open()
 
@@ -590,6 +593,8 @@ Public Class ChangePasswordByUser
 
         Me.Close()
 
+        SqlConnection.ClearAllPools()
+
     End Sub
 
     Private Sub X_Click(sender As Object, e As RoutedEventArgs) Handles Cl.Click
@@ -602,6 +607,8 @@ Public Class ChangePasswordByUser
         'End If
 
         Me.Close()
+
+        SqlConnection.ClearAllPools()
 
     End Sub
 

@@ -52,6 +52,52 @@ Partial Friend NotInheritable Class MySettings
             Return defaultInstance
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\SQL.mdf;Integ"& _ 
+        "rated Security=False;Persist Security Info=True;User ID=matejko990;Password=Arch"& _ 
+        "iwum18;Connect Timeout=30")>  _
+    Public ReadOnly Property SQLConnectionString() As String
+        Get
+            Return CType(Me("SQLConnectionString"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\SQLDB.mdf;Int"& _ 
+        "egrated Security=True;Connect Timeout=30")>  _
+    Public ReadOnly Property SQLDBConnectionString() As String
+        Get
+            Return CType(Me("SQLDBConnectionString"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\SQLDataBaseFu"& _ 
+        "ll.mdf;Integrated Security=True;Connect Timeout=30")>  _
+    Public ReadOnly Property SQLDataBaseFullConnectionString() As String
+        Get
+            Return CType(Me("SQLDataBaseFullConnectionString"),String)
+        End Get
+    End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\SQLDataBaseFu"& _ 
+        "ll.mdf;Persist Security Info=True;User ID=matejko990;Password=Archiwum18;Connect"& _ 
+        " Timeout=30")>  _
+    Public ReadOnly Property SQLDataBaseFullConnectionStringS() As String
+        Get
+            Return CType(Me("SQLDataBaseFullConnectionStringS"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My
